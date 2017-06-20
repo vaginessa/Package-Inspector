@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0B171D</color>
+    <color name="colorPrimaryDark">#081116</color>
+    <color name="colorAccent">#303F9F</color>
+    <color name="colorBackground">#081116</color>
+    <color name="colorStatusTitle">#eceff1</color>
+    <color name="color_about_text">#eceff1</color>
+
+    <!--Device Info-->
+    <color name="color_text">#eceff1</color>
+</resources>

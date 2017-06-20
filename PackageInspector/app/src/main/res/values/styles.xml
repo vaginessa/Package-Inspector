@@ -1,0 +1,48 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.About" parent="AppTheme">
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/color_about_text</item>
+    </style>
+
+    <style name="AppTheme.DeviceInfo" parent="AppTheme">
+        <item name="android:paddingEnd">@dimen/info_margin_horizontal</item>
+        <item name="android:paddingStart">@dimen/info_margin_horizontal</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="TextViewTitle" parent="AppTheme">
+        <item name="android:background">@android:drawable/dark_header</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/color_text</item>
+        <item name="android:textSize">@dimen/info_title_text_size</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="TextViewContent" parent="AppTheme">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/color_text</item>
+        <item name="android:textSize">@dimen/info_text_size</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="AppTheme.DeviceInfo.Content" parent="AppTheme">
+        <item name="android:paddingTop">@dimen/info_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/info_padding_vertical</item>
+    </style>
+</resources>

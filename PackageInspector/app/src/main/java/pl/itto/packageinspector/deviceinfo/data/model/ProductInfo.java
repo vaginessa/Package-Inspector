@@ -1,0 +1,35 @@
+package pl.itto.packageinspector.deviceinfo.data.model;
+
+/**
+ * Created by PL_itto on 6/15/2017.
+ */
+
+public class ProductInfo {
+    private String mProductName;
+    private String mModelName;
+    private String mPlatform;
+
+    public String getProductName() {
+        return mProductName;
+    }
+
+    public void setProductName(String productName) {
+        mProductName = productName;
+    }
+
+    public String getModelName() {
+        return mModelName;
+    }
+
+    public void setModelName(String modelName) {
+        mModelName = modelName;
+    }
+
+    public String getPlatform() {
+        return mPlatform;
+    }
+
+    public void setPlatform(String platform) {
+        mPlatform = platform;
+    }
+}
