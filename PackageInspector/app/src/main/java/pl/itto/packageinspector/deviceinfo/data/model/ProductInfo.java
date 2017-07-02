@@ -8,6 +8,7 @@ public class ProductInfo {
     private String mProductName;
     private String mModelName;
     private String mPlatform;
+    private String mManufacturer;
 
     public String getProductName() {
         return mProductName;
@@ -31,5 +32,13 @@ public class ProductInfo {
 
     public void setPlatform(String platform) {
         mPlatform = platform;
+    }
+
+    public String getManufacturer() {
+        return mManufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        mManufacturer = manufacturer;
     }
 }

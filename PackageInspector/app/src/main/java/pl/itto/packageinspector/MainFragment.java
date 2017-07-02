@@ -147,7 +147,7 @@ public class MainFragment extends Fragment implements IMainView {
 
     private void openDeviceInfo() {
         mActivity.getSupportActionBar().setTitle(getString(R.string.action_device_info));
-        DeviceInfoFragment fragment = new DeviceInfoFragment();
+        DeviceInfoFragment fragment = DeviceInfoFragment.newInstance();
         getFragmentManager().beginTransaction().replace(R.id.contentFrame, fragment).commit();
     }
 

@@ -22,6 +22,7 @@
     <string name="info_system_apk">System Apk </string>
     <string name="info_other_apk">Other Apk </string>
 
+    <string name="info_manufacturer">Manufacturer </string>
     <string name="info_product_name">Product Name </string>
     <string name="info_model_name">Model Name </string>
     <string name="info_platform">Platform </string>
@@ -40,7 +41,10 @@
 
     <string name="info_ram">Total Ram </string>
     <string name="info_storage">Storage </string>
-    
+
     <string name="info_result_content">: %s</string>
 
+    <!--Package Manager-->
+    <string name="pkg_system_apps">System Apps</string>
+    <string name="pkg_other_apps">Others Apps</string>
 </resources>

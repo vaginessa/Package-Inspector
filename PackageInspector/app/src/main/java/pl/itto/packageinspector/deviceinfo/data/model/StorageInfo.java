@@ -5,6 +5,22 @@ package pl.itto.packageinspector.deviceinfo.data.model;
  */
 
 public class StorageInfo {
-    String mTotalRam;
-    String mTotalStorage;
+    long mTotalRam;
+    long mTotalStorage;
+
+    public long getTotalRam() {
+        return mTotalRam;
+    }
+
+    public void setTotalRam(long totalRam) {
+        mTotalRam = totalRam;
+    }
+
+    public long getTotalStorage() {
+        return mTotalStorage;
+    }
+
+    public void setTotalStorage(long totalStorage) {
+        mTotalStorage = totalStorage;
+    }
 }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/pkg_layout_detail_margin"
+    android:paddingBottom="@dimen/pkg_layout_item_padding"
+    android:paddingTop="@dimen/pkg_layout_item_padding"
+    card_view:cardCornerRadius="7dp"
+    >
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_layout"
+        android:paddingBottom="@dimen/pkg_layout_item_padding"
+        android:paddingTop="@dimen/pkg_layout_item_padding">
+
+        <ImageView
+            android:id="@+id/pkg_icon"
+            android:layout_width="@dimen/pkg_icon_size"
+            android:layout_height="@dimen/pkg_icon_size"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_launcher_round"/>
+
+
+        <ImageView
+            android:id="@+id/pkg_option"
+            android:layout_width="@dimen/pkg_icon_option_size"
+            android:layout_height="@dimen/pkg_icon_option_size"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_option"/>
+
+        <LinearLayout
+            android:id="@+id/layout_app_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pkg_layout_detail_margin"
+            android:layout_marginRight="@dimen/pkg_layout_detail_margin"
+            android:layout_toLeftOf="@id/pkg_option"
+            android:layout_toRightOf="@id/pkg_icon"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/txt_label"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/pkg_label_color"
+                android:ellipsize="end"
+                android:textSize="@dimen/pkg_item_label_size"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/pkg_line_color"
+                />
+
+            <TextView
+                android:id="@+id/txt_pkg"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:textColor="@color/pkg_package_name_color"
+                android:textSize="@dimen/pkg_item_pkg_size"/>
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
