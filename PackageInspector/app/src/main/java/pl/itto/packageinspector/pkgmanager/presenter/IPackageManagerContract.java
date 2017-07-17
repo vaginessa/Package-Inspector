@@ -20,6 +20,13 @@ public interface IPackageManagerContract {
 
     interface IPackageManagerView extends IBaseView<IPackageManagerPresenter> {
         void notifyDataChanged();
+
+        void showLoadAppProgress();
+
+        void hideLoadAppProgress();
+
+        void setupAdapter();
+
     }
 
     interface ILoadAppsCallback {

@@ -47,4 +47,5 @@
     <!--Package Manager-->
     <string name="pkg_system_apps">System Apps</string>
     <string name="pkg_other_apps">Others Apps</string>
+    <string name="pkg_loading_apps">Loading Apps</string>
 </resources>

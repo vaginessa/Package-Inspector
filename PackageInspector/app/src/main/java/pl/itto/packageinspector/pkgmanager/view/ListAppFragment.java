@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +84,7 @@ public class ListAppFragment extends Fragment {
         Log.i(TAG, "appSize: " + mAppsList.size());
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
         ImageView mIcon, mOption;
         TextView mLabel, mPackageName;
         LinearLayout mDetailLayout;
@@ -115,6 +116,11 @@ public class ListAppFragment extends Fragment {
             mIcon.setImageDrawable(item.getDrawableIcon());
             mLabel.setText(item.getAppName());
             mPackageName.setText(item.getPkgName());
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            
         }
     }
 

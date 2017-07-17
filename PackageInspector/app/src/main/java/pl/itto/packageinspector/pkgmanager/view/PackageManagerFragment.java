@@ -1,5 +1,6 @@
 package pl.itto.packageinspector.pkgmanager.view;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
@@ -37,6 +38,8 @@ public class PackageManagerFragment extends Fragment implements IPackageManagerC
     private AppsPagerAdapter mAppsPagerAdapter;
     private IPackageManagerDataSource mDataSource;
     private IPackageManagerPresenter mPresenter;
+    private ProgressDialog mDialog;
+    private boolean mFirstRun = true;
 
     public static PackageManagerFragment newInstance() {
         PackageManagerFragment fragment = new PackageManagerFragment();
@@ -52,6 +55,7 @@ public class PackageManagerFragment extends Fragment implements IPackageManagerC
         mPresenter = new PackageManagerPresenter(getContext());
         mPresenter.setDataSource(mDataSource);
         mPresenter.setView(this);
+        mFirstRun = true;
     }
 
     @Nullable
@@ -61,14 +65,10 @@ public class PackageManagerFragment extends Fragment implements IPackageManagerC
         mTabLayout = (TabLayout) view.findViewById(R.id.tabs_pkg_mgr);
         mViewPager = (ViewPager) view.findViewById(R.id.pager_pkg_mgr);
         mTabLayout.setupWithViewPager(mViewPager);
-        mDataSource = new PackageManagerDataSource(getContext());
-        mDataSource.loadApps(new IPackageManagerContract.ILoadAppsCallback() {
-            @Override
-            public void onLoaded() {
-                setupAdapter();
-
-            }
-        });
+        if (mFirstRun) {
+            mFirstRun = false;
+            mPresenter.start();
+        }
 
         return view;
     }
@@ -78,7 +78,26 @@ public class PackageManagerFragment extends Fragment implements IPackageManagerC
 
     }
 
-    private void setupAdapter() {
+    @Override
+    public void showLoadAppProgress() {
+        mDialog = new ProgressDialog(getContext());
+        mDialog.setMessage(getString(R.string.pkg_loading_apps));
+        mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mDialog.setCancelable(false);
+        mDialog.show();
+
+
+    }
+
+    @Override
+    public void hideLoadAppProgress() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void setupAdapter() {
         mAppsPagerAdapter = new AppsPagerAdapter(getContext(), getFragmentManager());
         mViewPager.setAdapter(mAppsPagerAdapter);
         mAppsPagerAdapter.notifyDataSetChanged();
