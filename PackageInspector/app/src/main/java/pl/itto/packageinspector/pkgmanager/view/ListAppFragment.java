@@ -28,7 +28,7 @@ import pl.itto.packageinspector.pkgmanager.presenter.ListAppPresenter;
  * Created by PL_itto on 6/29/2017.
  */
 
-public class ListAppFragment extends Fragment {
+public class ListAppFragment extends Fragment implements IPackageManagerContract.ISearchAppsCallback {
 
     private static final String TAG = "PL_itto.ListAppFragment";
     private int position;
@@ -55,7 +55,7 @@ public class ListAppFragment extends Fragment {
         mPresenter = new ListAppPresenter(getContext());
         mPresenter.setDataSource(mDataSource);
         position = getArguments().getInt(KEY_POS, 0);
-        Log.i(TAG,"Position: "+position);
+        Log.i(TAG, "Position: " + position);
         if (position == 1) {
             mSystemApps = false;
         } else {
@@ -71,7 +71,7 @@ public class ListAppFragment extends Fragment {
         View view = inflater.inflate(R.layout.frag_list_pkg, container, false);
         mListApps = (RecyclerView) view.findViewById(R.id.list_apps);
         mListApps.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mListAppAdapter = new ListAppAdapter(getContext(), mAppsList);
+        mListAppAdapter = new ListAppAdapter(getContext());
         mListApps.setAdapter(mListAppAdapter);
         return view;
     }
@@ -80,8 +80,18 @@ public class ListAppFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         filterData();
-        mListAppAdapter.notifyDataSetChanged();
+
         Log.i(TAG, "appSize: " + mAppsList.size());
+    }
+
+    @Override
+    public void search(String name) {
+        if (mListAppAdapter != null) mListAppAdapter.filter(name);
+    }
+
+    @Override
+    public void clearFilter() {
+        if (mListAppAdapter != null) mListAppAdapter.clearFilter();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
@@ -98,6 +108,8 @@ public class ListAppFragment extends Fragment {
             mDetailLayout = (LinearLayout) itemView.findViewById(R.id.layout_app_detail);
             mDetailLayout.setOnClickListener(this);
             mOption.setOnClickListener(this);
+            mOption.setOnCreateContextMenuListener(this);
+            registerForContextMenu(mOption);
         }
 
         @Override
@@ -107,6 +119,7 @@ public class ListAppFragment extends Fragment {
                     mPresenter.showAppDetail();
                     break;
                 case R.id.pkg_option:
+                    mOption.showContextMenu();
                     Log.i(TAG, "option button click: ");
                     break;
             }
@@ -120,17 +133,23 @@ public class ListAppFragment extends Fragment {
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            
+            getActivity().getMenuInflater().inflate(R.menu.option_list_item, menu);
         }
     }
 
     class ListAppAdapter extends RecyclerView.Adapter<ViewHolder> {
         private Context mContext;
-        private List<AppItem> mItemList;
+        private List<AppItem> mItemList = new ArrayList<>();
 
-        public ListAppAdapter(Context context, List<AppItem> list) {
-            this.mItemList = list;
+        public ListAppAdapter(Context context) {
+
             mContext = context;
+        }
+
+        public void replaceData(List<AppItem> list) {
+            this.mItemList.clear();
+            this.mItemList.addAll(list);
+            notifyDataSetChanged();
         }
 
         @Override
@@ -148,15 +167,39 @@ public class ListAppFragment extends Fragment {
         public int getItemCount() {
             return mItemList.size();
         }
+
+        public void filter(String name) {
+            name=name.toLowerCase();
+            mItemList.clear();
+            for (AppItem item : mAppsList) {
+                String label = item.getAppName().toLowerCase();
+                String pkg = item.getPkgName().toLowerCase();
+                if (label.contains(name) || pkg.contains(name))
+                    mItemList.add(item);
+            }
+
+            notifyDataSetChanged();
+        }
+
+        public void clearFilter() {
+            mItemList.clear();
+            mItemList.addAll(mAppsList);
+            notifyDataSetChanged();
+        }
+
     }
 
     private void filterData() {
         mAppsList.clear();
-        Log.i(TAG,"pos" +position+" systemApp "+mSystemApps);
+        Log.i(TAG, "pos" + position + " systemApp " + mSystemApps);
         for (AppItem item : mDataSource.getListApps()) {
 
             if (item.isSystemApp() == mSystemApps)
                 mAppsList.add(item);
+        }
+        if(mListAppAdapter!=null){
+            mListAppAdapter.replaceData(mAppsList);
+
         }
     }
 

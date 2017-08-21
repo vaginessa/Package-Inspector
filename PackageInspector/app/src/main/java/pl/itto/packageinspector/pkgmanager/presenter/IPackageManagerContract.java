@@ -27,11 +27,22 @@ public interface IPackageManagerContract {
 
         void setupAdapter();
 
+        void filter(String name);
+
+        void clearFilter();
+
     }
 
     interface ILoadAppsCallback {
         void onLoaded();
     }
+
+    interface ISearchAppsCallback{
+        void search(String name);
+        void clearFilter();
+    }
+
+
 
     //    for List App
     interface IListAppPresenter extends IBasePresenter {

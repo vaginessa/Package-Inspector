@@ -48,4 +48,7 @@
     <string name="pkg_system_apps">System Apps</string>
     <string name="pkg_other_apps">Others Apps</string>
     <string name="pkg_loading_apps">Loading Apps</string>
+    <string name="pkg_option_extract_apk">Extract Apk</string>
+    <string name="pkg_action_search">Search</string>
 </resources>
+

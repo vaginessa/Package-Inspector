@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import pl.itto.packageinspector.pkgmanager.data.model.AppItem;
 import pl.itto.packageinspector.pkgmanager.presenter.IPackageManagerContract;
 import pl.itto.packageinspector.pkgmanager.data.PackageManagerDataSource;
 import pl.itto.packageinspector.pkgmanager.presenter.IPackageManagerContract.IPackageManagerPresenter;
+import pl.itto.packageinspector.pkgmanager.presenter.IPackageManagerContract.ISearchAppsCallback;
 import pl.itto.packageinspector.pkgmanager.presenter.PackageManagerPresenter;
 
 
@@ -40,6 +42,7 @@ public class PackageManagerFragment extends Fragment implements IPackageManagerC
     private IPackageManagerPresenter mPresenter;
     private ProgressDialog mDialog;
     private boolean mFirstRun = true;
+    private ISearchAppsCallback mSearchCallback;
 
     public static PackageManagerFragment newInstance() {
         PackageManagerFragment fragment = new PackageManagerFragment();
@@ -101,6 +104,37 @@ public class PackageManagerFragment extends Fragment implements IPackageManagerC
         mAppsPagerAdapter = new AppsPagerAdapter(getContext(), getFragmentManager());
         mViewPager.setAdapter(mAppsPagerAdapter);
         mAppsPagerAdapter.notifyDataSetChanged();
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            boolean first = true;
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (first && positionOffset == 0 && positionOffsetPixels == 0) {
+                    onPageSelected(0);
+                    first = false;
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mSearchCallback = (ISearchAppsCallback) mAppsPagerAdapter.getRegisteredFragment(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    @Override
+    public void filter(String name) {
+        mSearchCallback.search(name);
+    }
+
+    @Override
+    public void clearFilter() {
+        mSearchCallback.clearFilter();
     }
 
     @Override
@@ -112,7 +146,7 @@ public class PackageManagerFragment extends Fragment implements IPackageManagerC
     class AppsPagerAdapter extends FragmentStatePagerAdapter {
         private Context mContext;
         private String[] mTitleList;
-
+        SparseArray<Fragment> registeredFragment = new SparseArray<>();
 
         public AppsPagerAdapter(Context context, FragmentManager fm) {
             super(fm);
@@ -139,6 +173,23 @@ public class PackageManagerFragment extends Fragment implements IPackageManagerC
         @Override
         public CharSequence getPageTitle(int position) {
             return mTitleList[position];
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            registeredFragment.put(position, fragment);
+            return fragment;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            registeredFragment.remove(position);
+            super.destroyItem(container, position, object);
+        }
+
+        public Fragment getRegisteredFragment(int pos) {
+            return registeredFragment.get(pos);
         }
     }
 

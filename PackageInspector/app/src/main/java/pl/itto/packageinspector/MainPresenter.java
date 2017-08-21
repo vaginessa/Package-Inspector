@@ -4,9 +4,9 @@ package pl.itto.packageinspector;
  * Created by PL_itto on 6/15/2017.
  */
 
-public class MainPresenter implements IMainPresenter {
-    IMainView mMainView;
-    public MainPresenter(IMainView mainView) {
+public class MainPresenter implements IMainContract.IMainPresenter {
+    IMainContract.IMainView mMainView;
+    public MainPresenter(IMainContract.IMainView mainView) {
         mMainView = mainView;
         mMainView.setPresenter(this);
     }
