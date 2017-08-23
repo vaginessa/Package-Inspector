@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -22,19 +24,20 @@ import pl.itto.packageinspector.R;
 import pl.itto.packageinspector.pkgmanager.data.IPackageManagerDataSource;
 import pl.itto.packageinspector.pkgmanager.data.model.AppItem;
 import pl.itto.packageinspector.pkgmanager.presenter.IPackageManagerContract;
+import pl.itto.packageinspector.pkgmanager.presenter.IPackageManagerContract.IListAppPresenter;
 import pl.itto.packageinspector.pkgmanager.presenter.ListAppPresenter;
 
 /**
  * Created by PL_itto on 6/29/2017.
  */
 
-public class ListAppFragment extends Fragment implements IPackageManagerContract.ISearchAppsCallback {
+public class ListAppFragment extends Fragment implements IPackageManagerContract.IListAppView, IPackageManagerContract.ISearchAppsCallback {
 
     private static final String TAG = "PL_itto.ListAppFragment";
     private int position;
     private boolean mSystemApps = false;
     private static final String KEY_POS = "pos";
-    private IPackageManagerContract.IListAppPresenter mPresenter;
+    private IListAppPresenter mPresenter;
     private IPackageManagerDataSource mDataSource;
     private RecyclerView mListApps;
     private List<AppItem> mAppsList;
@@ -52,7 +55,8 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new ListAppPresenter(getContext());
+//        mPresenter = new ListAppPresenter(getContext());
+        setPresenter(new ListAppPresenter(getContext()));
         mPresenter.setDataSource(mDataSource);
         position = getArguments().getInt(KEY_POS, 0);
         Log.i(TAG, "Position: " + position);
@@ -62,7 +66,6 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
             mSystemApps = true;
         }
         mAppsList = new ArrayList<>();
-
     }
 
     @Nullable
@@ -94,6 +97,21 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
         if (mListAppAdapter != null) mListAppAdapter.clearFilter();
     }
 
+    @Override
+    public void showExtractSuccess() {
+
+    }
+
+    @Override
+    public void showExtractFailed() {
+
+    }
+
+    @Override
+    public void setPresenter(IListAppPresenter presenter) {
+        mPresenter = presenter;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
         ImageView mIcon, mOption;
         TextView mLabel, mPackageName;
@@ -108,8 +126,6 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
             mDetailLayout = (LinearLayout) itemView.findViewById(R.id.layout_app_detail);
             mDetailLayout.setOnClickListener(this);
             mOption.setOnClickListener(this);
-            mOption.setOnCreateContextMenuListener(this);
-            registerForContextMenu(mOption);
         }
 
         @Override
@@ -119,11 +135,30 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
                     mPresenter.showAppDetail();
                     break;
                 case R.id.pkg_option:
-                    mOption.showContextMenu();
+                    showOptionMenu(mOption);
                     Log.i(TAG, "option button click: ");
                     break;
             }
         }
+
+        private void showOptionMenu(View v) {
+            PopupMenu popupMenu = new PopupMenu(getContext(), v);
+            popupMenu.inflate(R.menu.option_list_item);
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.action_extract_apk:
+
+                            break;
+                    }
+                    return true;
+                }
+            });
+
+            popupMenu.show();
+        }
+
 
         void bindApps(AppItem item) {
             mIcon.setImageDrawable(item.getDrawableIcon());
@@ -135,6 +170,10 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             getActivity().getMenuInflater().inflate(R.menu.option_list_item, menu);
         }
+    }
+
+    private void extractapk(String path, String name) {
+        mPresenter.extractApk(path, name);
     }
 
     class ListAppAdapter extends RecyclerView.Adapter<ViewHolder> {
@@ -169,7 +208,7 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
         }
 
         public void filter(String name) {
-            name=name.toLowerCase();
+            name = name.toLowerCase();
             mItemList.clear();
             for (AppItem item : mAppsList) {
                 String label = item.getAppName().toLowerCase();
@@ -197,7 +236,7 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
             if (item.isSystemApp() == mSystemApps)
                 mAppsList.add(item);
         }
-        if(mListAppAdapter!=null){
+        if (mListAppAdapter != null) {
             mListAppAdapter.replaceData(mAppsList);
 
         }

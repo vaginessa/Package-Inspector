@@ -37,25 +37,34 @@ public interface IPackageManagerContract {
         void onLoaded();
     }
 
-    interface ISearchAppsCallback{
+    interface ISearchAppsCallback {
         void search(String name);
+
         void clearFilter();
     }
 
 
-
     //    for List App
+    interface IListAppView extends IBaseView<IListAppPresenter> {
+        void showExtractSuccess();
+
+        void showExtractFailed();
+
+
+    }
+
     interface IListAppPresenter extends IBasePresenter {
         void showAppDetail();
 
         void setDataSource(IPackageManagerDataSource dataSource);
 
-        void extractApk(int pos);
+        void extractApk(String path, String name);
 
         void launchApp(int pos);
 
         void uninstallApp(int pos);
 
+        void setView(IListAppView view);
     }
 
 

@@ -10,9 +10,21 @@ import pl.itto.packageinspector.pkgmanager.data.model.AppItem;
  */
 
 public interface IPackageManagerDataSource {
+
+    interface IActionApkCallback {
+        void onSuccess();
+
+        void onError();
+    }
+
     void loadApps(IPackageManagerContract.ILoadAppsCallback callback);
 
     List<AppItem> getListApps();
 
+    void extractApk(String path, String name, IActionApkCallback callback);
+
+    String getSaveApkPath();
+
+    boolean uninstallApp(String packageName);
 
 }

@@ -16,6 +16,8 @@ public class AppItem {
     Drawable mDrawableIcon;
     String[] permissions;
 
+    private String mApkPath;
+
     public String[] getPermissions() {
         return permissions;
     }
@@ -80,5 +82,13 @@ public class AppItem {
 
     public void setSystemApp(boolean systemApp) {
         mSystemApp = systemApp;
+    }
+
+    public String getApkPath() {
+        return mApkPath;
+    }
+
+    public void setApkPath(String apkPath) {
+        mApkPath = apkPath;
     }
 }
