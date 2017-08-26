@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
@@ -89,20 +90,19 @@ public class PackageManagerDataSource implements IPackageManagerDataSource {
 
     @Override
     public void extractApk(String path, String name, IActionApkCallback callback) {
-
+        new ExtractApk(path,name,callback).execute();
     }
 
     @Override
     public String getSaveApkPath() {
         if (mSharedPreferences != null) {
-            return mSharedPreferences.getString(AppConstants.Settings.SETTING_APK_PATH_KEY, null);
+            return mSharedPreferences.getString(AppConstants.Settings.SETTING_APK_PATH_KEY, Environment.getExternalStorageDirectory()+"/PackageInspector/Apk");
         }
         return null;
     }
 
     @Override
     public boolean uninstallApp(String packageName) {
-
         return false;
     }
 

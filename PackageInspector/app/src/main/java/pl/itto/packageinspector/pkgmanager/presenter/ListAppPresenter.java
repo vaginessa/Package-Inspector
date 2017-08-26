@@ -34,12 +34,12 @@ public class ListAppPresenter implements IPackageManagerContract.IListAppPresent
 
             @Override
             public void onSuccess() {
-                
+                 mView.showExtractSuccess();
             }
 
             @Override
             public void onError() {
-
+                mView.showExtractFailed();
             }
         });
     }

@@ -1,6 +1,7 @@
 package pl.itto.packageinspector.pkgmanager.presenter;
 
 
+import pl.itto.packageinspector.MainActivity;
 import pl.itto.packageinspector.base.IBasePresenter;
 import pl.itto.packageinspector.base.IBaseView;
 import pl.itto.packageinspector.pkgmanager.data.IPackageManagerDataSource;
@@ -50,6 +51,7 @@ public interface IPackageManagerContract {
 
         void showExtractFailed();
 
+        MainActivity getMainActivity();
 
     }
 

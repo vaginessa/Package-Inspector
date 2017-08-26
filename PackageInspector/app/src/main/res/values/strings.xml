@@ -50,5 +50,7 @@
     <string name="pkg_loading_apps">Loading Apps</string>
     <string name="pkg_option_extract_apk">Extract Apk</string>
     <string name="pkg_action_search">Search</string>
+    <string name="pkg_extract_failed">Extracting failed!</string>
+    <string name="pkg_extract_success">Extracting succeed!</string>
 </resources>
 

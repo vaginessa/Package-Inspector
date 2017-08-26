@@ -20,6 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.itto.packageinspector.MainActivity;
 import pl.itto.packageinspector.R;
 import pl.itto.packageinspector.pkgmanager.data.IPackageManagerDataSource;
 import pl.itto.packageinspector.pkgmanager.data.model.AppItem;
@@ -58,6 +59,7 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
 //        mPresenter = new ListAppPresenter(getContext());
         setPresenter(new ListAppPresenter(getContext()));
         mPresenter.setDataSource(mDataSource);
+        mPresenter.setView(this);
         position = getArguments().getInt(KEY_POS, 0);
         Log.i(TAG, "Position: " + position);
         if (position == 1) {
@@ -83,7 +85,6 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         filterData();
-
         Log.i(TAG, "appSize: " + mAppsList.size());
     }
 
@@ -99,12 +100,17 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
 
     @Override
     public void showExtractSuccess() {
-
+        getMainActivity().showMessage(getString(R.string.pkg_extract_success));
     }
 
     @Override
     public void showExtractFailed() {
+        getMainActivity().showMessage(getString(R.string.pkg_extract_failed));
+    }
 
+    @Override
+    public MainActivity getMainActivity() {
+        return (MainActivity) getActivity();
     }
 
     @Override
@@ -112,71 +118,14 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
         mPresenter = presenter;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
-        ImageView mIcon, mOption;
-        TextView mLabel, mPackageName;
-        LinearLayout mDetailLayout;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            mIcon = (ImageView) itemView.findViewById(R.id.pkg_icon);
-            mOption = (ImageView) itemView.findViewById(R.id.pkg_option);
-            mLabel = (TextView) itemView.findViewById(R.id.txt_label);
-            mPackageName = (TextView) itemView.findViewById(R.id.txt_pkg);
-            mDetailLayout = (LinearLayout) itemView.findViewById(R.id.layout_app_detail);
-            mDetailLayout.setOnClickListener(this);
-            mOption.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.layout_app_detail:
-                    mPresenter.showAppDetail();
-                    break;
-                case R.id.pkg_option:
-                    showOptionMenu(mOption);
-                    Log.i(TAG, "option button click: ");
-                    break;
-            }
-        }
-
-        private void showOptionMenu(View v) {
-            PopupMenu popupMenu = new PopupMenu(getContext(), v);
-            popupMenu.inflate(R.menu.option_list_item);
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.action_extract_apk:
-
-                            break;
-                    }
-                    return true;
-                }
-            });
-
-            popupMenu.show();
-        }
-
-
-        void bindApps(AppItem item) {
-            mIcon.setImageDrawable(item.getDrawableIcon());
-            mLabel.setText(item.getAppName());
-            mPackageName.setText(item.getPkgName());
-        }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            getActivity().getMenuInflater().inflate(R.menu.option_list_item, menu);
-        }
-    }
 
     private void extractapk(String path, String name) {
         mPresenter.extractApk(path, name);
     }
 
-    class ListAppAdapter extends RecyclerView.Adapter<ViewHolder> {
+    class ListAppAdapter extends RecyclerView.Adapter<ListAppAdapter.ViewHolder> {
+
+
         private Context mContext;
         private List<AppItem> mItemList = new ArrayList<>();
 
@@ -226,6 +175,68 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
             notifyDataSetChanged();
         }
 
+        class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
+            ImageView mIcon, mOption;
+            TextView mLabel, mPackageName;
+            LinearLayout mDetailLayout;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+                mIcon = (ImageView) itemView.findViewById(R.id.pkg_icon);
+                mOption = (ImageView) itemView.findViewById(R.id.pkg_option);
+                mLabel = (TextView) itemView.findViewById(R.id.txt_label);
+                mPackageName = (TextView) itemView.findViewById(R.id.txt_pkg);
+                mDetailLayout = (LinearLayout) itemView.findViewById(R.id.layout_app_detail);
+                mDetailLayout.setOnClickListener(this);
+                mOption.setOnClickListener(this);
+            }
+
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.layout_app_detail:
+                        mPresenter.showAppDetail();
+                        break;
+                    case R.id.pkg_option:
+                        showOptionMenu(mOption, getAdapterPosition());
+                        Log.i(TAG, "option button click: ");
+                        break;
+                }
+            }
+
+            private void showOptionMenu(View v, final int pos) {
+                PopupMenu popupMenu = new PopupMenu(getContext(), v);
+                popupMenu.inflate(R.menu.option_list_item);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_extract_apk:
+
+                                AppItem temp = mItemList.get(pos);
+                                Log.i(TAG, "Extract :"+temp.getAppName());
+                                extractapk(temp.getApkPath(), temp.getAppName());
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+                popupMenu.show();
+            }
+
+
+            void bindApps(AppItem item) {
+                mIcon.setImageDrawable(item.getDrawableIcon());
+                mLabel.setText(item.getAppName());
+                mPackageName.setText(item.getPkgName());
+            }
+
+            @Override
+            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                getActivity().getMenuInflater().inflate(R.menu.option_list_item, menu);
+            }
+        }
     }
 
     private void filterData() {

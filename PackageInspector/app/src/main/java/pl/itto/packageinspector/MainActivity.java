@@ -1,5 +1,6 @@
 package pl.itto.packageinspector;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,8 +12,6 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     public Fragment createFragment() {
-        MainFragment fragment=MainFragment.newInstance();
-
         return MainFragment.newInstance();
     }
 
@@ -20,6 +19,10 @@ public class MainActivity extends BaseFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DeviceManager.getInfo();
+    }
+
+    public void showMessage(String message) {
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
     }
 
 }

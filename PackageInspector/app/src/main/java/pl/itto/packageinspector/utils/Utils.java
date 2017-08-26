@@ -55,11 +55,14 @@ public class Utils {
     }
 
     public static boolean copyFile(String srdFile, String desFolder, String destName) {
+        Log.i(TAG, "copyFile: " + srdFile + " desFolder: " + desFolder);
         File src = new File(srdFile);
         if (!src.exists()) return false;
-        File dst = new File(desFolder, destName);
+        File dst = new File(desFolder, destName+".apk");
         if (!dst.getParentFile().exists()) {
-            dst.getParentFile().mkdir();
+            boolean result = dst.getParentFile().mkdirs();
+            Log.i(TAG, "make dest dir: " + dst.getParentFile().getAbsolutePath() + "   " + result);
+            if (!result) return false;
         }
 
         if (!dst.exists())
