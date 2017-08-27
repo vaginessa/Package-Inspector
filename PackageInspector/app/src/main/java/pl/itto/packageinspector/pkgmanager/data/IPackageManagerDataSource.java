@@ -1,5 +1,7 @@
 package pl.itto.packageinspector.pkgmanager.data;
 
+import android.content.Context;
+
 import java.util.List;
 
 import pl.itto.packageinspector.pkgmanager.presenter.IPackageManagerContract;
@@ -22,6 +24,8 @@ public interface IPackageManagerDataSource {
     List<AppItem> getListApps();
 
     void extractApk(String path, String name, IActionApkCallback callback);
+
+    boolean launchApp(String pkgName);
 
     String getSaveApkPath();
 

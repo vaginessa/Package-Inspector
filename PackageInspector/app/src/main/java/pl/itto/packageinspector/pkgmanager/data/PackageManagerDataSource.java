@@ -90,13 +90,18 @@ public class PackageManagerDataSource implements IPackageManagerDataSource {
 
     @Override
     public void extractApk(String path, String name, IActionApkCallback callback) {
-        new ExtractApk(path,name,callback).execute();
+        new ExtractApk(path, name, callback).execute();
+    }
+
+    @Override
+    public boolean launchApp(String pkgName) {
+        return Utils.launchApp(mContext, pkgName);
     }
 
     @Override
     public String getSaveApkPath() {
         if (mSharedPreferences != null) {
-            return mSharedPreferences.getString(AppConstants.Settings.SETTING_APK_PATH_KEY, Environment.getExternalStorageDirectory()+"/PackageInspector/Apk");
+            return mSharedPreferences.getString(AppConstants.Settings.SETTING_APK_PATH_KEY, Environment.getExternalStorageDirectory() + "/PackageInspector/Apk");
         }
         return null;
     }

@@ -4,4 +4,8 @@
         android:id="@+id/action_extract_apk"
         android:title="@string/pkg_option_extract_apk"
         />
+    <item
+        android:id="@+id/action_launch_app"
+        android:title="@string/pkg_option_launch"
+        />
 </menu>

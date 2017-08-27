@@ -1,6 +1,9 @@
 package pl.itto.packageinspector.utils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 import java.io.File;
@@ -54,11 +57,19 @@ public class Utils {
         return false;
     }
 
+    /**
+     * Copy a file from Path to a folder with name
+     *
+     * @param srdFile   Source File's Path
+     * @param desFolder Destination Folder
+     * @param destName  Destination Apk file name
+     * @return true if Copying succeed false ìf not
+     */
     public static boolean copyFile(String srdFile, String desFolder, String destName) {
         Log.i(TAG, "copyFile: " + srdFile + " desFolder: " + desFolder);
         File src = new File(srdFile);
         if (!src.exists()) return false;
-        File dst = new File(desFolder, destName+".apk");
+        File dst = new File(desFolder, destName + ".apk");
         if (!dst.getParentFile().exists()) {
             boolean result = dst.getParentFile().mkdirs();
             Log.i(TAG, "make dest dir: " + dst.getParentFile().getAbsolutePath() + "   " + result);
@@ -100,4 +111,24 @@ public class Utils {
 
     }
 
+
+    /**
+     * Launch an app from package Name
+     * @param context Context
+     * @param packageName package Name
+     * @return true if Launch app successfully, false if not
+     */
+    public static boolean launchApp(Context context, String packageName) {
+        try {
+            PackageManager manager = context.getPackageManager();
+            Intent launchIntent = manager.getLaunchIntentForPackage(packageName);
+            if (launchIntent == null) return false;
+            launchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(launchIntent);
+        } catch (Exception e) {
+            Log.e(TAG, "error on Launching App: " + e.toString());
+            return false;
+        }
+        return true;
+    }
 }

@@ -49,8 +49,9 @@
     <string name="pkg_other_apps">Others Apps</string>
     <string name="pkg_loading_apps">Loading Apps</string>
     <string name="pkg_option_extract_apk">Extract Apk</string>
+    <string name="pkg_option_launch">Launch App</string>
     <string name="pkg_action_search">Search</string>
     <string name="pkg_extract_failed">Extracting failed!</string>
-    <string name="pkg_extract_success">Extracting succeed!</string>
+    <string name="pkg_extract_success">Extracting succeeded!</string>
 </resources>
 

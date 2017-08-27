@@ -32,6 +32,7 @@ public interface IPackageManagerContract {
 
         void clearFilter();
 
+
     }
 
     interface ILoadAppsCallback {
@@ -47,12 +48,13 @@ public interface IPackageManagerContract {
 
     //    for List App
     interface IListAppView extends IBaseView<IListAppPresenter> {
-        void showExtractSuccess();
+        void showMessage(String msg);
 
-        void showExtractFailed();
+        void extractapk(String path, String name);
+
+        void launchApp(String pkgName);
 
         MainActivity getMainActivity();
-
     }
 
     interface IListAppPresenter extends IBasePresenter {
@@ -62,9 +64,9 @@ public interface IPackageManagerContract {
 
         void extractApk(String path, String name);
 
-        void launchApp(int pos);
+        void launchApp(String pkgName);
 
-        void uninstallApp(int pos);
+        void uninstallApp(String pkg);
 
         void setView(IListAppView view);
     }

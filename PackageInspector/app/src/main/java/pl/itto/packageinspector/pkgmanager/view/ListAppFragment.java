@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -76,8 +77,12 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
         View view = inflater.inflate(R.layout.frag_list_pkg, container, false);
         mListApps = (RecyclerView) view.findViewById(R.id.list_apps);
         mListApps.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        itemDecoration.setDrawable(getContext().getResources().getDrawable(R.drawable.line_divider));
+        mListApps.addItemDecoration(itemDecoration);
         mListAppAdapter = new ListAppAdapter(getContext());
         mListApps.setAdapter(mListAppAdapter);
+
         return view;
     }
 
@@ -98,14 +103,19 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
         if (mListAppAdapter != null) mListAppAdapter.clearFilter();
     }
 
-    @Override
-    public void showExtractSuccess() {
-        getMainActivity().showMessage(getString(R.string.pkg_extract_success));
-    }
+//    @Override
+//    public void showExtractSuccess() {
+//        getMainActivity().showMessage(getString(R.string.pkg_extract_success));
+//    }
+//
+//    @Override
+//    public void showExtractFailed() {
+//        getMainActivity().showMessage(getString(R.string.pkg_extract_failed));
+//    }
 
     @Override
-    public void showExtractFailed() {
-        getMainActivity().showMessage(getString(R.string.pkg_extract_failed));
+    public void showMessage(String msg) {
+        getMainActivity().showMessage(msg);
     }
 
     @Override
@@ -118,9 +128,14 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
         mPresenter = presenter;
     }
 
-
-    private void extractapk(String path, String name) {
+    @Override
+    public void extractapk(String path, String name) {
         mPresenter.extractApk(path, name);
+    }
+
+    @Override
+    public void launchApp(String pkgName) {
+        mPresenter.launchApp(pkgName);
     }
 
     class ListAppAdapter extends RecyclerView.Adapter<ListAppAdapter.ViewHolder> {
@@ -205,6 +220,7 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
             }
 
             private void showOptionMenu(View v, final int pos) {
+                final AppItem temp = mItemList.get(pos);
                 PopupMenu popupMenu = new PopupMenu(getContext(), v);
                 popupMenu.inflate(R.menu.option_list_item);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -212,11 +228,12 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_extract_apk:
-
-                                AppItem temp = mItemList.get(pos);
-                                Log.i(TAG, "Extract :"+temp.getAppName());
+                                Log.i(TAG, "Extract :" + temp.getAppName());
                                 extractapk(temp.getApkPath(), temp.getAppName());
                                 break;
+                            case R.id.action_launch_app:
+                                Log.i(TAG, "LaunchApp :" + temp.getAppName() + "/" + temp.getPkgName());
+                                launchApp(temp.getPkgName());
                         }
                         return true;
                     }

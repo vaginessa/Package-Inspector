@@ -1,7 +1,9 @@
 package pl.itto.packageinspector.pkgmanager.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
+import pl.itto.packageinspector.R;
 import pl.itto.packageinspector.pkgmanager.data.IPackageManagerDataSource;
 import pl.itto.packageinspector.pkgmanager.presenter.IPackageManagerContract.IListAppView;
 
@@ -10,6 +12,7 @@ import pl.itto.packageinspector.pkgmanager.presenter.IPackageManagerContract.ILi
  */
 
 public class ListAppPresenter implements IPackageManagerContract.IListAppPresenter {
+    private static final String TAG = "PL_itto.ListAppPresenter";
     IPackageManagerDataSource mDataSource;
     Context mContext;
     private IListAppView mView;
@@ -34,24 +37,30 @@ public class ListAppPresenter implements IPackageManagerContract.IListAppPresent
 
             @Override
             public void onSuccess() {
-                 mView.showExtractSuccess();
+//                mView.showExtractSuccess();
+                mView.showMessage(mContext.getString(R.string.pkg_extract_success));
             }
 
             @Override
             public void onError() {
-                mView.showExtractFailed();
+//                mView.showExtractFailed();
+                mView.showMessage(mContext.getString(R.string.pkg_extract_failed));
             }
         });
     }
 
 
     @Override
-    public void launchApp(int pos) {
-
+    public void launchApp(String pkgName) {
+        if (mDataSource.launchApp(pkgName)) {
+            Log.i(TAG, "Launch " + pkgName + " successfully!");
+        } else {
+            Log.e(TAG, "Error in Launching " + pkgName);
+        }
     }
 
     @Override
-    public void uninstallApp(int pos) {
+    public void uninstallApp(String pkg) {
 
     }
 

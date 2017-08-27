@@ -14,4 +14,5 @@
     <color name="pkg_line_color">#ddd9d4</color>
     <color name="pkg_label_color">#0B171D</color>
     <color name="pkg_package_name_color">#918a88</color>
+    <color name="pkg_app_item_bgr_color">#FFFFFF</color>
 </resources>
