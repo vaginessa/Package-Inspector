@@ -21,11 +21,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import pl.itto.packageinspector.about.AboutActivity;
-import pl.itto.packageinspector.deviceinfo.view.DeviceInfoFragment;
-import pl.itto.packageinspector.pkgmanager.presenter.IPackageManagerContract;
-import pl.itto.packageinspector.pkgmanager.presenter.IPackageManagerContract.IPackageManagerView;
-import pl.itto.packageinspector.pkgmanager.view.PackageManagerFragment;
+import pl.itto.packageinspector.ui.about.AboutActivity;
+import pl.itto.packageinspector.ui.deviceinfo.view.DeviceInfoFragment;
+import pl.itto.packageinspector.ui.pkgmanager.presenter.IPackageManagerContract.IPackageManagerView;
+import pl.itto.packageinspector.ui.pkgmanager.view.PackageManagerFragment;
+import pl.itto.packageinspector.ui.setting.SettingActivity;
 
 /**
  * Created by PL_itto on 6/15/2017.
@@ -106,6 +106,10 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
                         break;
                     case R.id.nav_more_apps:
                         navId = FLAG_MORE_APPS;
+                        break;
+                    case R.id.nav_setting:
+                        Intent i = new Intent(getContext(), SettingActivity.class);
+                        startActivity(i);
                         break;
                 }
 //                item.setChecked(true);

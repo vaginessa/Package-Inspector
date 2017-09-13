@@ -1,7 +1,7 @@
 package pl.itto.packageinspector;
 
-import pl.itto.packageinspector.base.IBasePresenter;
-import pl.itto.packageinspector.base.IBaseView;
+import pl.itto.packageinspector.ui.base.IBasePresenter;
+import pl.itto.packageinspector.ui.base.IBaseView;
 
 /**
  * Created by PL_itto on 8/21/2017.

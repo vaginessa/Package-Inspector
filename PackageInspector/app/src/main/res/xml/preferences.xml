@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="pref_key_setting_storage"
+        android:title="storage">
+        <CheckBoxPreference
+            android:key="pref_notification"
+            android:title="Notification"
+            />
+        <SwitchPreference
+            android:key="pref_auto"
+            android:title="Enable auto start"
+            />
+        <PreferenceScreen
+            android:key="pref_help"
+            android:persistent="false"
+            android:title="Help">
+            <CheckBoxPreference
+                android:summary="Call direct to us via voice call"
+                android:title="Call us"
+                />
+            <CheckBoxPreference
+                android:summary="Send sms to us"
+                android:title="sms"
+                />
+            <CheckBoxPreference
+                android:summary="Contact to our online help service"
+                android:title="Online Chat"
+                />
+        </PreferenceScreen>
+    </PreferenceCategory>
+</PreferenceScreen>

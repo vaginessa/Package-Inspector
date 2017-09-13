@@ -3,10 +3,9 @@ package pl.itto.packageinspector;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.Menu;
 
-import pl.itto.packageinspector.base.BaseFragmentActivity;
-import pl.itto.packageinspector.deviceinfo.data.DeviceManager;
+import pl.itto.packageinspector.ui.base.BaseFragmentActivity;
+import pl.itto.packageinspector.ui.deviceinfo.data.DeviceManager;
 
 public class MainActivity extends BaseFragmentActivity {
 

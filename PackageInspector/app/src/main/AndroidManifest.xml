@@ -22,9 +22,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".about.AboutActivity"
-            android:theme="@style/AppTheme.About"
-            />
+            android:name=".ui.about.AboutActivity"
+            android:theme="@style/AppTheme.About"/>
+        <activity android:name=".ui.setting.SettingActivity"
+            android:theme="@style/AppTheme.Toolbar"
+            >
+        </activity>
     </application>
 
 </manifest>
