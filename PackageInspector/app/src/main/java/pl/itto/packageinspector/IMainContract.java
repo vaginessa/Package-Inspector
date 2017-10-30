@@ -1,7 +1,7 @@
 package pl.itto.packageinspector;
 
-import pl.itto.packageinspector.ui.base.IBasePresenter;
-import pl.itto.packageinspector.ui.base.IBaseView;
+import pl.itto.packageinspector.base.IBasePresenter;
+import pl.itto.packageinspector.base.IBaseView;
 
 /**
  * Created by PL_itto on 8/21/2017.
@@ -21,7 +21,18 @@ public interface IMainContract {
      */
 
     interface IMainView extends IBaseView<IMainPresenter> {
+        void openSettings();
+
         void navigateView(int id);
 
+        void openDeviceInfo();
+
+        void openPackageManager();
+
+        void openAbout();
+
+        void openRateApp();
+
+        void clearSearchView();
     }
 }

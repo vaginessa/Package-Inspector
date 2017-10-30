@@ -6,13 +6,23 @@
     <color name="colorBackground">#081116</color>
     <color name="colorStatusTitle">#eceff1</color>
     <color name="color_about_text">#eceff1</color>
-
+    <color name="color_fab_text">#eceff1</color>
     <!--Device Info-->
-    <color name="color_text">#eceff1</color>
+    <color name="color_text">@color/colorPrimaryDark</color>
 
     <!--Package Manager-->
     <color name="pkg_line_color">#ddd9d4</color>
     <color name="pkg_label_color">#0B171D</color>
     <color name="pkg_package_name_color">#918a88</color>
     <color name="pkg_app_item_bgr_color">#FFFFFF</color>
+
+    <!--App Detail-->
+    <color name="app_detail_text_color">#AA000000</color>
+    <color name="app_detail_text_color1">#565454</color>
+    <color name="app_detail_text_color2">#474646</color>
+
+    <!--Setting-->
+    <color name="folder_text_color">#474646</color>
+    <color name="folder_select_bgr">#19397a</color>
+    <color name="folder_select_text_color">#FFFFFF</color>
 </resources>

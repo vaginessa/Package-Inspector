@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:background="@color/colorPrimaryDark"-->
+            <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+            <!--app:theme="@style/AppTheme.Toolbar"/>-->
+    <!--</android.support.design.widget.AppBarLayout>-->
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/layout_info1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="@dimen/app_detail_margin_bottom">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/img_icon"-->
+            <!--android:layout_width="@dimen/app_detail_icon_size"-->
+            <!--android:layout_height="@dimen/app_detail_icon_size"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:src="@drawable/ic_app_icon_default"/>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginStart="@dimen/app_detail_margin_start1"-->
+            <!--android:layout_toRightOf="@+id/img_icon"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txt_app_name"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:fontFamily="sans-serif"-->
+                <!--android:text="App Name"-->
+                <!--android:textColor="@color/app_detail_text_color"-->
+                <!--android:textSize="@dimen/app_detail_text_size"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txt_version"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="version"-->
+                <!--android:textColor="@color/app_detail_text_color1"-->
+                <!--android:textSize="@dimen/app_detail_text_size_tiny"/>-->
+
+        <!--</LinearLayout>-->
+    <!--</RelativeLayout>-->
+
+    <!--<View-->
+        <!--android:id="@+id/line_info"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1sp"-->
+        <!--android:layout_below="@id/layout_info1"-->
+        <!--android:background="@color/colorPrimary"/>-->
+
+    <!--<TableRow-->
+        <!--android:id="@+id/row_btn"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/line_info"-->
+        <!--android:layout_marginTop="@dimen/app_detail_margin_top">-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btn_uninstall"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@android:color/white"-->
+            <!--android:text="@string/app_uninstall"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textColor="@color/app_detail_text_color"-->
+            <!--android:textSize="@dimen/app_detail_text_size"/>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btn_stop"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10sp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@android:color/white"-->
+            <!--android:text="@string/app_force_stop"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textColor="@color/app_detail_text_color"-->
+            <!--android:textSize="@dimen/app_detail_text_size"-->
+            <!--android:visibility="invisible"/>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btn_launch"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10sp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@android:color/white"-->
+            <!--android:text="@string/app_launch"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textColor="@color/app_detail_text_color"-->
+            <!--android:textSize="@dimen/app_detail_text_size"/>-->
+
+    <!--</TableRow>-->
+
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@+id/row_btn"-->
+        <!--android:layout_marginLeft="@dimen/app_detail_margin_start2"-->
+        <!--android:layout_marginTop="@dimen/app_detail_margin_top1">-->
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/layout_info2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Package Name"-->
+                <!--android:textColor="@color/app_detail_text_color2"-->
+                <!--android:textSize="@dimen/app_detail_text_size"-->
+                <!--android:textStyle="bold"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txt_package"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Package"-->
+                <!--android:textColor="@color/app_detail_text_color1"-->
+                <!--android:textSize="@dimen/app_detail_text_size_small"-->
+                <!--android:textStyle="normal"/>-->
+
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1sp"-->
+                <!--android:layout_marginTop="@dimen/app_detail_margin_top"-->
+                <!--android:background="@android:color/darker_gray"/>-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Storage"-->
+                <!--android:textColor="@color/app_detail_text_color2"-->
+                <!--android:textSize="@dimen/app_detail_text_size"-->
+                <!--android:textStyle="bold"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txt_size"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Storage"-->
+                <!--android:textColor="@color/app_detail_text_color1"-->
+                <!--android:textSize="@dimen/app_detail_text_size_small"-->
+                <!--android:textStyle="normal"/>-->
+
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1sp"-->
+                <!--android:layout_marginTop="5sp"-->
+                <!--android:background="@android:color/darker_gray"/>-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Permissons"-->
+                <!--android:textColor="@color/app_detail_text_color2"-->
+                <!--android:textSize="@dimen/app_detail_text_size"-->
+                <!--android:textStyle="bold"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txt_permission"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Permisson"-->
+                <!--android:textColor="@color/app_detail_text_color1"-->
+                <!--android:textSize="@dimen/app_detail_text_size_small"-->
+                <!--android:textStyle="normal"/>-->
+
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1sp"-->
+                <!--android:layout_marginTop="5sp"-->
+                <!--android:background="@android:color/darker_gray"/>-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Date installed"-->
+                <!--android:textColor="@color/app_detail_text_color2"-->
+                <!--android:textSize="@dimen/app_detail_text_size"-->
+                <!--android:textStyle="bold"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txt_date"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Date installed"-->
+                <!--android:textColor="@color/app_detail_text_color1"-->
+                <!--android:textSize="@dimen/app_detail_text_size_small"-->
+                <!--android:textStyle="normal"/>-->
+
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1sp"-->
+                <!--android:layout_marginTop="5sp"-->
+                <!--android:background="@android:color/darker_gray"/>-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Last Date modified"-->
+                <!--android:textColor="@color/app_detail_text_color2"-->
+                <!--android:textSize="@dimen/app_detail_text_size"-->
+                <!--android:textStyle="bold"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txt_date_modify"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Date modified"-->
+                <!--android:textColor="@color/app_detail_text_color1"-->
+                <!--android:textSize="@dimen/app_detail_text_size_small"-->
+                <!--android:textStyle="normal"/>-->
+
+
+        <!--</LinearLayout>-->
+
+    <!--</ScrollView>-->
+
+
+</LinearLayout>

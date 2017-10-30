@@ -2,10 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="pl.itto.packageinspector">
 
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
+        android:name=".MainApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -22,11 +24,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.about.AboutActivity"
+            android:name=".about.AboutActivity"
             android:theme="@style/AppTheme.About"/>
-        <activity android:name=".ui.setting.SettingActivity"
-            android:theme="@style/AppTheme.Toolbar"
-            >
+        <activity
+            android:name=".appdetail.view.AppDetailActivity"
+            android:label="@string/app_info_title"
+            android:theme="@style/AppDetailTheme">
+        </activity>
+        <activity
+            android:name=".setting.view.SettingActivity"
+            android:label="@string/setting_title"
+            android:theme="@style/AppDetailTheme">
+        </activity>
+        <activity
+            android:name=".filechooser.view.FileChooserActivity"
+            android:label="@string/folder_select_title">
         </activity>
     </application>
 

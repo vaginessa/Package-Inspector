@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:icon="@mipmap/ic_launcher"
+        android:key="@string/app_detail_title"
+        android:title="" />
+    <Preference
+        android:key="@string/app_detail_package"
+        android:title="@string/app_package" />
+    <Preference
+        android:key="@string/app_detail_apk_size"
+        android:title="@string/app_apk_size" />
+    <Preference
+        android:key="@string/app_detail_data_size"
+        android:summary="@string/app_data_calculating"
+        android:title="@string/app_data_size" />
+    <Preference
+        android:key="@string/app_detail_permissions"
+        android:summary="@string/app_no_permission_required"
+        android:title="@string/app_permission" />
+    <Preference
+        android:key="@string/app_detail_date_installed"
+        android:title="@string/app_install_date" />
+    <Preference
+        android:key="@string/app_detail_date_modify"
+        android:title="@string/app_modify_date" />
+</PreferenceScreen>

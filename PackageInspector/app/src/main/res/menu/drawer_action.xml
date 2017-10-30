@@ -1,44 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <!--Function Group-->
-    <group android:checkableBehavior="single">
-        <group
-            android:checkableBehavior="single">
-            <item
-                android:id="@+id/nav_device_info"
-                android:icon="@drawable/ic_device_info"
-                android:title="@string/action_device_info"/>
-            <item
-                android:id="@+id/nav_pkg_manager"
-                android:icon="@drawable/ic_apps"
-                android:title="@string/action_package_manager"/>
-
-        </group>
-
-        <!--Communicate Group-->
+    <group
+        android:id="@+id/group_action"
+        android:checkableBehavior="single">
         <item
-            android:title="@string/group_communicate"
-            >
-            <menu>
-                <item
-                    android:id="@+id/nav_setting"
-                    android:icon="@drawable/ic_setting"
-                    android:title="@string/action_setting"/>
-                <item
-                    android:id="@+id/nav_about"
-                    android:icon="@drawable/ic_about"
-                    android:title="@string/action_detail"/>
-                <item
-                    android:id="@+id/nav_rate"
-                    android:icon="@drawable/ic_rate"
-                    android:title="@string/action_rate"/>
-                <item
-                    android:id="@+id/nav_more_apps"
-                    android:icon="@drawable/ic_more_apps"
-                    android:title="@string/action_more_apps"/>
+            android:id="@+id/nav_device_info"
+            android:icon="@drawable/ic_device_info"
+            android:title="@string/action_device_info"/>
+        <item
+            android:id="@+id/nav_pkg_manager"
+            android:icon="@drawable/ic_apps"
+            android:title="@string/action_package_manager"/>
+    </group>
 
-            </menu>
-        </item>
+    <!--Communicate Group-->
+    <group
+        android:id="@+id/group_other"
+        android:checkableBehavior="none"
+        >
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_setting"
+            android:title="@string/action_setting"/>
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_about"
+            android:title="@string/action_detail"/>
+        <item
+            android:id="@+id/nav_rate"
+            android:icon="@drawable/ic_rate"
+            android:title="@string/action_rate"/>
+        <item
+            android:id="@+id/nav_more_apps"
+            android:icon="@drawable/ic_more_apps"
+            android:title="@string/action_more_apps"/>
+
     </group>
 
 

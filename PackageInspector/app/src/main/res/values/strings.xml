@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name">"Package Inspector "</string>
-
     <!--For NavigationView-->
     <string name="action_device_info">Device Info</string>
     <string name="action_package_manager">Package Manager</string>
+    <string name="action_setting">Settings</string>
     <string name="action_detail">About</string>
     <string name="action_rate">Rating</string>
-    <string name="action_setting">Setting</string>
     <string name="action_more_apps">More Apps</string>
-    <string name="group_communicate">Others</string>
+    <string name="group_communicate">Communicate</string>
     <string name="action_header_title">Package Inspector ver 1.0</string>
+
 
     <!--Device Info-->
     <string name="title_pkg_info">Package Info:</string>
@@ -51,8 +51,50 @@
     <string name="pkg_loading_apps">Loading Apps</string>
     <string name="pkg_option_extract_apk">Extract Apk</string>
     <string name="pkg_option_launch">Launch App</string>
+    <string name="pkg_option_open_intent">More Detail</string>
+    <string name="pkg_option_remove">Uninstall App</string>
     <string name="pkg_action_search">Search</string>
     <string name="pkg_extract_failed">Extracting failed!</string>
     <string name="pkg_extract_success">Extracting succeeded!</string>
+    <string name="pkg_extract_success1">App is extracted to %s</string>
+    <string name="pkg_uninstall_failed">Uninstalling failed!</string>
+
+    <!--&lt;!&ndash;App Detail&ndash;&gt;-->
+    <!--<string name="app_detail_title">App Detail</string>-->
+    <!--<string name="app_uninstall">Uninstall</string>-->
+    <!--<string name="app_force_stop">Force Stop</string>-->
+    <!--<string name="app_launch">Launch</string>-->
+
+
+    <!--App Detail Key-->
+    <string name="app_info_title">App Detail</string>
+    <string name="app_detail_title">app_title</string>
+    <string name="app_detail_package">app_package</string>
+    <string name="app_detail_apk_size">app_apk_size</string>
+    <string name="app_detail_data_size">app_data_size</string>
+    <string name="app_detail_permissions">app_permission</string>
+    <string name="app_detail_date_installed">app_installed_date</string>
+    <string name="app_detail_date_modify">app_modify_date</string>
+
+    <!--App Detail Title-->
+    <string name="app_package">Package name</string>
+    <string name="app_apk_size">Apk size</string>
+    <string name="app_data_size">Data size</string>
+    <string name="app_permission">Permissions</string>
+    <string name="app_install_date">Installed date</string>
+    <string name="app_modify_date">Last modified date</string>
+    <string name="app_data_calculating">Calculating...</string>
+    <string name="app_no_permission_required">No permission required</string>
+    <string name="app_version_name">Version: %s</string>
+
+    <!--Setting-->
+    <string name="setting_title">Settings</string>
+    <string name="setting_apk_path_key" translatable="false">apk_path</string>
+    <string name="setting_apk_path">Path to save Apk</string>
+    <string name="save_path_success">Change Apk path successfully!</string>
+    <string name="save_path_fail">Change Apk path failed</string>
+
+    <!--Folder Chooser-->
+    <string name="folder_select_title">Select Folder</string>
 </resources>
 

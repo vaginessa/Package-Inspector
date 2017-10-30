@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -21,11 +23,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import pl.itto.packageinspector.ui.about.AboutActivity;
-import pl.itto.packageinspector.ui.deviceinfo.view.DeviceInfoFragment;
-import pl.itto.packageinspector.ui.pkgmanager.presenter.IPackageManagerContract.IPackageManagerView;
-import pl.itto.packageinspector.ui.pkgmanager.view.PackageManagerFragment;
-import pl.itto.packageinspector.ui.setting.SettingActivity;
+import pl.itto.packageinspector.about.AboutActivity;
+import pl.itto.packageinspector.deviceinfo.view.DeviceInfoFragment;
+import pl.itto.packageinspector.deviceinfo.view.IDeviceInfoView;
+import pl.itto.packageinspector.pkgmanager.IPackageManagerContract.IPackageManagerView;
+import pl.itto.packageinspector.pkgmanager.view.PackageManagerFragment;
+import pl.itto.packageinspector.setting.view.SettingActivity;
+import pl.itto.packageinspector.utils.AppConstants;
 
 /**
  * Created by PL_itto on 6/15/2017.
@@ -38,6 +42,7 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
     public static final int FLAG_ABOUT = 2;
     public static final int FLAG_RATING = 3;
     public static final int FLAG_MORE_APPS = 4;
+    public static final int FLAG_SETTING = 5;
     public static final int FLAG_UNKNOWN = -1;
 
     private DrawerLayout mDrawerLayout;
@@ -48,6 +53,9 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
     private NavigationView mNavigationView;
     private Menu mOptionMenu;
     private IPackageManagerView mPackageManagerView;
+    private IDeviceInfoView mDeviceInfoView;
+    SearchView searchView;
+    private int mCurrentSelectPos = 0;
 
     public static MainFragment newInstance() {
 //        Bundle args = new Bundle();
@@ -88,6 +96,7 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Log.i(TAG, "onNavigationItemSelected: " + item.getTitle());
                 int navId = FLAG_UNKNOWN;
                 switch (item.getItemId()) {
                     case R.id.nav_device_info:
@@ -107,13 +116,11 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
                     case R.id.nav_more_apps:
                         navId = FLAG_MORE_APPS;
                         break;
-                    case R.id.nav_setting:
-                        Intent i = new Intent(getContext(), SettingActivity.class);
-                        startActivity(i);
+                    case R.id.nav_settings:
+                        navId = FLAG_SETTING;
+                        openSettings();
                         break;
                 }
-//                item.setChecked(true);
-//                mDrawerLayout.closeDrawers();
                 mPresenter.processNavigationSelected(navId);
                 return false;
             }
@@ -137,7 +144,10 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
         if (mFirstStart) {
             mFirstStart = false;
             mPresenter.start();
+        } else {
+            navigateView(mCurrentSelectPos);
         }
+
     }
 
     @Override
@@ -145,7 +155,7 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
         inflater.inflate(R.menu.main_menu, menu);
         mOptionMenu = menu;
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) mOptionMenu.findItem(R.id.action_search).getActionView();
+        searchView = (SearchView) mOptionMenu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -173,12 +183,22 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
                 }
             }
         });
+        if (!mFirstStart) {
+            switchSearchView(mCurrentSelectPos == FLAG_PACKAGE_MANAGER);
+        }
         Log.i(TAG, "onCreateOptionsMenu");
     }
 
-    @SuppressWarnings("unused")
+    @Override
+    public void openSettings() {
+        Intent intent = new Intent(getContext(), SettingActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void navigateView(int id) {
+        Log.i(TAG, "navigateView: " + id);
+        mCurrentSelectPos = id;
         mDrawerLayout.closeDrawers();
         switch (id) {
             case FLAG_DEVICE_INFO:
@@ -192,6 +212,8 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
                 mNavigationView.setCheckedItem(R.id.nav_pkg_manager);
                 openPackageManager();
                 break;
+            case FLAG_RATING:
+
         }
     }
 
@@ -200,28 +222,74 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
         mPresenter = presenter;
     }
 
-    private void openDeviceInfo() {
+    @Override
+    public void showMessage(String msg) {
+
+    }
+
+    @Override
+    public void showMessage(int resId) {
+
+    }
+
+    public void openDeviceInfo() {
         switchSearchView(false);
         mActivity.getSupportActionBar().setTitle(getString(R.string.action_device_info));
-        DeviceInfoFragment fragment = DeviceInfoFragment.newInstance();
-        getFragmentManager().beginTransaction().replace(R.id.contentFrame, fragment).commit();
+        DeviceInfoFragment fragment;
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        fragment = (DeviceInfoFragment) fm.findFragmentByTag(AppConstants.Tab.FLAG_DEVICE_INFO);
+        if (fragment == null) {
+            Log.i(TAG, "openDeviceInfo: Create New");
+            fragment = DeviceInfoFragment.newInstance(this);
+            transaction.add(R.id.content_frame, fragment, AppConstants.Tab.FLAG_DEVICE_INFO);
+        }
+        Fragment fragment1 = fm.findFragmentByTag(AppConstants.Tab.FLAG_PKG_MGR);
+        if (fragment1 != null) {
+            transaction.hide(fragment1);
+        }
+        transaction.show(fragment);
+        transaction.commit();
+
+
     }
 
-    private void openPackageManager() {
+    public void openPackageManager() {
         switchSearchView(true);
         mActivity.getSupportActionBar().setTitle(getString(R.string.action_package_manager));
-        PackageManagerFragment fragment = new PackageManagerFragment();
-        mPackageManagerView = fragment;
-        getFragmentManager().beginTransaction().replace(R.id.contentFrame, fragment).commit();
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        PackageManagerFragment fragment = (PackageManagerFragment) fm.findFragmentByTag(AppConstants.Tab.FLAG_PKG_MGR);
+        if (fragment == null) {
+            Log.i(TAG, "openPackageManager: Create New");
+            fragment = PackageManagerFragment.newInstance(this);
+            mPackageManagerView = fragment;
+            transaction.add(R.id.content_frame, fragment, AppConstants.Tab.FLAG_PKG_MGR);
+        }
+        Fragment fragment1 = fm.findFragmentByTag(AppConstants.Tab.FLAG_DEVICE_INFO);
+        if (fragment1 != null) {
+            transaction.hide(fragment1);
+        }
+        transaction.show(fragment);
+        transaction.commit();
+
     }
 
-    private void openAbout() {
+    public void openAbout() {
         Intent i = new Intent(getContext(), AboutActivity.class);
         startActivity(i);
     }
 
-    private void openRateApp() {
+    public void openRateApp() {
 
+    }
+
+    @Override
+    public void clearSearchView() {
+        if (searchView != null) {
+            searchView.setQuery("", false);
+            searchView.clearFocus();
+        }
     }
 
     private void openMoreApps() {
@@ -229,6 +297,7 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
     }
 
     private void switchSearchView(boolean visibled) {
+        Log.i(TAG, "switchSearchView: " + visibled);
         if (mOptionMenu != null) mOptionMenu.findItem(R.id.action_search).setVisible(visibled);
     }
 
