@@ -17,6 +17,8 @@ public interface IFileChooserContract {
         void enterDirectory(FolderItem item);
 
         void selectDirectory(String path);
+
+        void onBackPress();
     }
 
     interface IFileChooserPresenter extends IBasePresenter {

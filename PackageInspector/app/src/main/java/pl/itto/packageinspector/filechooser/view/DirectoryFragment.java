@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,15 +25,17 @@ import java.util.Stack;
 import pl.itto.packageinspector.R;
 import pl.itto.packageinspector.base.BaseFragmentActivity;
 import pl.itto.packageinspector.filechooser.IFileChooserContract;
+import pl.itto.packageinspector.filechooser.IFileChooserContract.IFileChooserView;
 import pl.itto.packageinspector.filechooser.model.FolderItem;
 import pl.itto.packageinspector.utils.AppConstants;
 import pl.itto.packageinspector.utils.Utils;
+import pl.itto.packageinspector.widget.StateTextView;
 
 /**
  * Created by PL_itto on 10/26/2017.
  */
 
-public class DirectoryFragment extends Fragment implements IFileChooserContract.IFileChooserView {
+public class DirectoryFragment extends Fragment implements IFileChooserView {
     private static final String TAG = "PL_itto.DirectoryFragment";
     View mView;
     private RecyclerView mListView;
@@ -40,7 +43,7 @@ public class DirectoryFragment extends Fragment implements IFileChooserContract.
     FolderListAdapter mAdapter;
     Stack<FolderItem> mParentList = null;
     private Toolbar mToolbar;
-    private TextView mSelectBtn;
+    private StateTextView mSelectBtn;
     private String mApkPath = null;
     private int mCurrentSelectPos = -1;
 
@@ -58,7 +61,7 @@ public class DirectoryFragment extends Fragment implements IFileChooserContract.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_file_chooser, container, false);
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        mSelectBtn = (TextView) view.findViewById(R.id.option_select);
+        mSelectBtn = (StateTextView) view.findViewById(R.id.option_select);
         setupActionBar();
         mListView = (RecyclerView) view.findViewById(R.id.folders_view);
         mListView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -104,12 +107,12 @@ public class DirectoryFragment extends Fragment implements IFileChooserContract.
 
     @Override
     public void showMessage(String msg) {
-
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showMessage(int resId) {
-
+        Toast.makeText(getContext(), resId, Toast.LENGTH_SHORT).show();
     }
 
     class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.ViewHolder> {
@@ -152,9 +155,12 @@ public class DirectoryFragment extends Fragment implements IFileChooserContract.
                         FolderItem item = items.get(pos);
                         if (!item.isParent()) {
                             mCurrentSelectPos = pos;
+                            setSelectBtnState(true);
                         }
                         return;
                 }
+
+                setSelectBtnState(false);
                 FolderItem item = items.get(getAdapterPosition());
                 Log.i(TAG, "onClick: " + getAdapterPosition() + " isParent : " + item.isParent());
                 if (item.isParent()) {
@@ -175,7 +181,17 @@ public class DirectoryFragment extends Fragment implements IFileChooserContract.
         }
     }
 
+    private void setSelectBtnState(boolean enabled) {
+        mSelectBtn.setActionable(enabled);
+        if (enabled) {
+            mSelectBtn.setText(R.string.folder_selected);
+        } else {
+            mSelectBtn.setText(R.string.folder_select_none);
+        }
+    }
+
     public void firstInitData() {
+        mToolbar.setTitle(R.string.folder_select_title);
         items.clear();
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
         FolderItem folder = new FolderItem("Sd card", file, false);
@@ -193,7 +209,6 @@ public class DirectoryFragment extends Fragment implements IFileChooserContract.
                 FolderItem curDir = mParentList.peek();
                 Utils.loadDirectory(curDir.getFile(), items);
             }
-
         }
     }
 
@@ -212,19 +227,32 @@ public class DirectoryFragment extends Fragment implements IFileChooserContract.
         getActivity().finish();
     }
 
+    @Override
+    public void onBackPress() {
+        if (mParentList.size() > 0) {
+            goToParent();
+            mAdapter.notifyDataSetChanged();
+        } else {
+            getActivity().finish();
+        }
+    }
+
     View.OnClickListener mSelectFolderListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Log.i(TAG, "onClick: Select Folder"+mCurrentSelectPos);
-            if (mCurrentSelectPos != -1) {
-                FolderItem item = items.get(mCurrentSelectPos);
-                if (item != null && !item.isParent())
-                    if (item.getFile() != null) {
-                        Log.i(TAG, "save path: " + item.getFile().getAbsolutePath());
-                        selectDirectory(item.getFile().getAbsolutePath());
-                    }
+            Log.i(TAG, "onClick: Select Folder" + mCurrentSelectPos);
+            if (mSelectBtn.isActionable()) {
+                if (mCurrentSelectPos != -1) {
+                    FolderItem item = items.get(mCurrentSelectPos);
+                    if (item != null && !item.isParent())
+                        if (item.getFile() != null) {
+                            Log.i(TAG, "save path: " + item.getFile().getAbsolutePath());
+                            selectDirectory(item.getFile().getAbsolutePath());
+                        }
+                }
+            } else {
+                showMessage(R.string.folder_not_select_warning);
             }
-
         }
     };
 

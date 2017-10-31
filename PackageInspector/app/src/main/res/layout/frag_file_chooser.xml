@@ -14,8 +14,8 @@
         android:background="@color/colorPrimaryDark"
         android:elevation="15dp"
         android:minHeight="@dimen/action_bar_size"
-        app:theme="@style/AppTheme.Toolbar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/AppTheme.Toolbar"/>
 
     <LinearLayout
         android:id="@+id/option_layout"
@@ -26,11 +26,11 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
+        <pl.itto.packageinspector.widget.StateTextView
             android:id="@+id/option_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select this folder"
+            android:text="@string/folder_select_none"
             android:textColor="@color/folder_select_text_color"
             android:textSize="@dimen/folder_select_text_size"/>
     </LinearLayout>

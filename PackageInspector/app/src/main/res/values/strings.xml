@@ -96,5 +96,9 @@
 
     <!--Folder Chooser-->
     <string name="folder_select_title">Select Folder</string>
+    <string name="folder_select_none">Choose a folder</string>
+    <string name="folder_selected">Select this folder</string>
+    <string name="folder_not_select_warning">You must choose a folder first!</string>
+
 </resources>
 
