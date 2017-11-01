@@ -50,7 +50,7 @@ public class DirectoryFragment extends Fragment implements IFileChooserView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+//        setRetainInstance(true);
         setHasOptionsMenu(true);
         setup();
         firstInitData();
@@ -175,6 +175,8 @@ public class DirectoryFragment extends Fragment implements IFileChooserView {
                 FolderItem item = items.get(pos);
                 if (item.isParent()) {
                     mSelectRadio.setVisibility(View.GONE);
+                } else {
+                    mSelectRadio.setVisibility(View.VISIBLE);
                 }
                 mName.setText(item.getTitle());
             }
@@ -191,7 +193,8 @@ public class DirectoryFragment extends Fragment implements IFileChooserView {
     }
 
     public void firstInitData() {
-        mToolbar.setTitle(R.string.folder_select_title);
+        if (mToolbar != null)
+            mToolbar.setTitle(R.string.folder_select_title);
         items.clear();
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
         FolderItem folder = new FolderItem("Sd card", file, false);

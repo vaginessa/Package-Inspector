@@ -64,7 +64,7 @@ public class DeviceInfoFragment extends Fragment implements IDeviceInfoView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate: ");
-        setRetainInstance(true);
+//        setRetainInstance(true);
         mDataSource = new DeviceManager(getContext());
         mPresenter = new DeviceInfoPresenter(mDataSource, this);
 

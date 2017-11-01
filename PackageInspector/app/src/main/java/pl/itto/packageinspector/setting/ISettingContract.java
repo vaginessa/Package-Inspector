@@ -12,6 +12,8 @@ public interface ISettingContract {
         void openDirectorySelector();
 
         void onChangeApkPathSuccess(String newPath);
+
+        void openAbout();
     }
 
     interface ISettingPresenter extends IBasePresenter {

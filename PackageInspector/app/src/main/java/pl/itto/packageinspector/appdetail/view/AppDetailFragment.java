@@ -13,6 +13,7 @@ import pl.itto.packageinspector.appdetail.presenter.AppDetailFragmentPresenter;
 import pl.itto.packageinspector.appdetail.IAppDetailContract;
 import pl.itto.packageinspector.appdetail.IAppDetailContract.IAppDetailFragmentPresenter;
 import pl.itto.packageinspector.appdetail.model.AppInfo;
+import pl.itto.packageinspector.base.BasePreferenceFragent;
 import pl.itto.packageinspector.utils.Utils;
 
 import static pl.itto.packageinspector.utils.AppConstants.AppDetail.EXTRA_KEY;
@@ -21,7 +22,7 @@ import static pl.itto.packageinspector.utils.AppConstants.AppDetail.EXTRA_KEY;
  * Created by PL_itto on 10/20/2017.
  */
 
-public class AppDetailFragment extends PreferenceFragmentCompat implements IAppDetailContract.IAppDetailFragmentView, Preference.OnPreferenceClickListener {
+public class AppDetailFragment extends BasePreferenceFragent implements IAppDetailContract.IAppDetailFragmentView, Preference.OnPreferenceClickListener {
     private static final String TAG = "PL_itto.AppDetailFragment1";
     private Preference mName, mPackage, mApkSize, mDataSize, mPermission, mInstallDate, mModifyDate;
     private String mPackageName = null;
@@ -39,7 +40,7 @@ public class AppDetailFragment extends PreferenceFragmentCompat implements IAppD
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate: ");
-        setRetainInstance(true);
+//        setRetainInstance(true);
         addPreferencesFromResource(R.xml.app_detail_preference);
         mPackageName = getArguments().getString(EXTRA_KEY);
         setPresenter(new AppDetailFragmentPresenter(this, getActivity().getBaseContext()));

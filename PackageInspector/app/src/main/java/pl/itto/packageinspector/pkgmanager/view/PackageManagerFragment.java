@@ -53,9 +53,8 @@ public class PackageManagerFragment extends Fragment implements IPackageManagerC
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-        Log.i(TAG, "onCreate: " + savedInstanceState != null ? "Has Data" : "null");
-        mDataSource = new DataManager(getContext());
+//        setRetainInstance(true);
+        mDataSource = DataManager.getInstance(getContext());
         mPresenter = new PackageManagerPresenter(getContext());
         mPresenter.setDataSource(mDataSource);
         mPresenter.setView(this);
@@ -92,6 +91,7 @@ public class PackageManagerFragment extends Fragment implements IPackageManagerC
 
     @Override
     public void showLoadAppProgress() {
+        Log.i(TAG, "showLoadAppProgress: ");
         mDialog = new ProgressDialog(getContext());
         mDialog.setMessage(getString(R.string.pkg_loading_apps));
         mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -110,7 +110,8 @@ public class PackageManagerFragment extends Fragment implements IPackageManagerC
 
     @Override
     public void setupAdapter() {
-        mAppsPagerAdapter = new AppsPagerAdapter(getContext(), getFragmentManager());
+        Thread.dumpStack();
+        mAppsPagerAdapter = new AppsPagerAdapter(getContext(), getChildFragmentManager());
         mViewPager.setAdapter(mAppsPagerAdapter);
         mAppsPagerAdapter.notifyDataSetChanged();
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

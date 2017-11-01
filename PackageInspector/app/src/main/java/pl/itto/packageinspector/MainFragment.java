@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import pl.itto.packageinspector.about.AboutActivity;
+import pl.itto.packageinspector.base.BaseFragment;
 import pl.itto.packageinspector.deviceinfo.view.DeviceInfoFragment;
 import pl.itto.packageinspector.deviceinfo.view.IDeviceInfoView;
 import pl.itto.packageinspector.pkgmanager.IPackageManagerContract.IPackageManagerView;
@@ -35,7 +36,7 @@ import pl.itto.packageinspector.utils.AppConstants;
  * Created by PL_itto on 6/15/2017.
  */
 
-public class MainFragment extends Fragment implements IMainContract.IMainView {
+public class MainFragment extends BaseFragment implements IMainContract.IMainView {
     public static final String TAG = "PL_itto.MainFragment";
     public static final int FLAG_DEVICE_INFO = 0;
     public static final int FLAG_PACKAGE_MANAGER = 1;
@@ -68,13 +69,14 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+//        setRetainInstance(true);
         setHasOptionsMenu(true);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.frag_main, container, false);
         // Setup the toolbar
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -105,17 +107,17 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
                     case R.id.nav_pkg_manager:
                         navId = FLAG_PACKAGE_MANAGER;
                         break;
-                    case R.id.nav_about:
-                        navId = FLAG_ABOUT;
+//                    case R.id.nav_about:
+//                        navId = FLAG_ABOUT;
 //                        Intent i = new Intent(getContext(), AboutActivity.class);
 //                        startActivity(i);
-                        break;
+//                        break;
                     case R.id.nav_rate:
                         navId = FLAG_RATING;
                         break;
-                    case R.id.nav_more_apps:
-                        navId = FLAG_MORE_APPS;
-                        break;
+//                    case R.id.nav_more_apps:
+//                        navId = FLAG_MORE_APPS;
+//                        break;
                     case R.id.nav_settings:
                         navId = FLAG_SETTING;
                         openSettings();
@@ -140,14 +142,13 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.i(TAG, "onViewCreated");
+        Log.i(TAG, "onViewCreated: " + mFirstStart);
         if (mFirstStart) {
             mFirstStart = false;
-            mPresenter.start();
+            if (mPresenter != null) mPresenter.start();
         } else {
             navigateView(mCurrentSelectPos);
         }
-
     }
 
     @Override
@@ -205,15 +206,16 @@ public class MainFragment extends Fragment implements IMainContract.IMainView {
                 mNavigationView.setCheckedItem(R.id.nav_device_info);
                 openDeviceInfo();
                 break;
-            case FLAG_ABOUT:
-                openAbout();
-                break;
+//            case FLAG_ABOUT:
+//                openAbout();
+//                break;
             case FLAG_PACKAGE_MANAGER:
                 mNavigationView.setCheckedItem(R.id.nav_pkg_manager);
                 openPackageManager();
                 break;
             case FLAG_RATING:
-
+                getParentActivity().openAppInStore();
+                break;
         }
     }
 

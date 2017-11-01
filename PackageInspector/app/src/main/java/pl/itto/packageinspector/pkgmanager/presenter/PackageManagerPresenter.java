@@ -24,6 +24,7 @@ public class PackageManagerPresenter implements IPackageManagerContract.IPackage
 
     @Override
     public void start() {
+        Log.i(TAG, "start: ");
         mView.showLoadAppProgress();
         loadApps(new ILoadAppsCallback() {
             @Override

@@ -43,4 +43,15 @@
     <dimen name="folder_text_size">14dp</dimen>
     <dimen name="folder_select_text_size">20dp</dimen>
     <dimen name="folder_select_height">55dp</dimen>
+
+    <!--About -->
+    <dimen name="about_icon_size">80dp</dimen>
+    <dimen name="about_margin_top">20dp</dimen>
+    <dimen name="about_margin_start">50dp</dimen>
+    <dimen name="about_margin_start1">10dp</dimen>
+    <dimen name="about_padding">3dp</dimen>
+    <dimen name="about_title_text_size">20dp</dimen>
+    <dimen name="about_author_text_size">17dp</dimen>
+    <dimen name="about_rate_text_size">17dp</dimen>
+    <dimen name="about_rate_icon_size">40dp</dimen>
 </resources>

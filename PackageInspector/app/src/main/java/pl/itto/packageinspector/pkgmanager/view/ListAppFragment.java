@@ -26,6 +26,8 @@ import java.util.List;
 import pl.itto.packageinspector.MainActivity;
 import pl.itto.packageinspector.R;
 import pl.itto.packageinspector.appdetail.view.AppDetailActivity;
+import pl.itto.packageinspector.base.BaseFragment;
+import pl.itto.packageinspector.base.IActionCallback;
 import pl.itto.packageinspector.data.IDataSource;
 import pl.itto.packageinspector.pkgmanager.model.AppItem;
 import pl.itto.packageinspector.pkgmanager.IPackageManagerContract;
@@ -39,7 +41,7 @@ import static pl.itto.packageinspector.utils.AppConstants.PkgManager.*;
  * Created by PL_itto on 6/29/2017.
  */
 
-public class ListAppFragment extends Fragment implements IPackageManagerContract.IListAppView {
+public class ListAppFragment extends BaseFragment implements IPackageManagerContract.IListAppView {
 
     private static final String TAG = "PL_itto.ListAppFragment";
     private int position;
@@ -66,7 +68,6 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
         mRemovedApp = null;
 //        mPresenter = new ListAppPresenter(getContext());
         setPresenter(new ListAppPresenter(getContext()));
@@ -80,6 +81,12 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
             mSystemApps = true;
         }
         mAppsList = new ArrayList<>();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.i(TAG, "onDestroy: ");
+        super.onDestroy();
     }
 
     @Nullable
@@ -121,7 +128,7 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
 
     @Override
     public void showMessage(int resId) {
-
+        getParentActivity().showMessage(resId);
     }
 
     @Override
@@ -294,7 +301,23 @@ public class ListAppFragment extends Fragment implements IPackageManagerContract
                         switch (item.getItemId()) {
                             case R.id.action_extract_apk:
                                 Log.i(TAG, "Extract :" + temp.getAppName());
-                                extractapk(temp.getApkPath(), temp.getAppName());
+                                if (getParentActivity().isGrantPermisisons())
+                                    extractapk(temp.getApkPath(), temp.getAppName());
+                                else {
+                                    getParentActivity().requestPermissions(new IActionCallback() {
+                                        @Override
+                                        public void onSuccess(Object result) {
+                                            extractapk(temp.getApkPath(), temp.getAppName());
+                                        }
+
+                                        @Override
+                                        public void onFailed(@Nullable Object error) {
+                                            showMessage(R.string.permission_grant_failed);
+                                        }
+                                    });
+                                    break;
+
+                                }
                                 break;
                             case R.id.action_launch_app:
                                 Log.i(TAG, "LaunchApp :" + temp.getAppName() + "/" + temp.getPkgName());

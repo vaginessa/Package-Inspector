@@ -25,4 +25,7 @@
     <color name="folder_text_color">#474646</color>
     <color name="folder_select_bgr">#19397a</color>
     <color name="folder_select_text_color">#FFFFFF</color>
+
+    <!--About-->
+    <color name="about_text_color">#FFFFFF</color>
 </resources>

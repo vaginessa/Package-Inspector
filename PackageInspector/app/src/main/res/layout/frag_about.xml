@@ -1,15 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/about_icon_size"
+        android:layout_height="@dimen/about_icon_size"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/about_margin_top"
+        android:src="@mipmap/ic_launcher"/>
+
     <TextView
+        android:id="@+id/app_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/icon"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="About Activity"
-        />
-</LinearLayout>
+        android:text="@string/about_title"
+        android:textColor="@color/about_text_color"
+        android:textSize="@dimen/about_title_text_size"/>
+
+    <!--Rate-->
+    <LinearLayout
+        android:id="@+id/layout_rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/about_margin_top"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/about_rate"
+            android:textColor="@color/about_text_color"
+            android:textSize="@dimen/about_rate_text_size"
+            />
+
+        <ImageView
+            android:id="@+id/img_like"
+            android:layout_width="@dimen/about_rate_icon_size"
+            android:layout_height="@dimen/about_rate_icon_size"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_like"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/author_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/layout_rate"
+        android:layout_below="@id/app_title"
+        android:gravity="center">
+
+        <!--Name-->
+        <LinearLayout
+            android:id="@+id/author_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/about_margin_start"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_author_title"
+                android:textColor="@color/about_text_color"
+                android:textSize="@dimen/about_author_text_size"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_author"
+                android:textColor="@color/about_text_color"
+                android:textSize="@dimen/about_author_text_size"/>
+        </LinearLayout>
+
+        <!--Email-->
+        <LinearLayout
+            android:id="@+id/author_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/author_name"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/about_margin_start"
+            android:layout_marginTop="@dimen/about_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_email_title"
+                android:textColor="@color/about_text_color"
+                android:textSize="@dimen/about_author_text_size"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_email"
+                android:textColor="@color/about_text_color"
+                android:textSize="@dimen/about_author_text_size"/>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

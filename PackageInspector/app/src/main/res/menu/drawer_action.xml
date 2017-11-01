@@ -24,18 +24,18 @@
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_setting"
             android:title="@string/action_setting"/>
-        <item
-            android:id="@+id/nav_about"
-            android:icon="@drawable/ic_about"
-            android:title="@string/action_detail"/>
+        <!--<item-->
+            <!--android:id="@+id/nav_about"-->
+            <!--android:icon="@drawable/ic_about"-->
+            <!--android:title="@string/action_detail"/>-->
         <item
             android:id="@+id/nav_rate"
             android:icon="@drawable/ic_rate"
             android:title="@string/action_rate"/>
-        <item
-            android:id="@+id/nav_more_apps"
-            android:icon="@drawable/ic_more_apps"
-            android:title="@string/action_more_apps"/>
+        <!--<item-->
+            <!--android:id="@+id/nav_more_apps"-->
+            <!--android:icon="@drawable/ic_more_apps"-->
+            <!--android:title="@string/action_more_apps"/>-->
 
     </group>
 

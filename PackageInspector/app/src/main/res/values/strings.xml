@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">"Package Inspector "</string>
+    <string name="permission_grant_failed">This feature need this Permissions to work properly</string>
     <!--For NavigationView-->
     <string name="action_device_info">Device Info</string>
     <string name="action_package_manager">Package Manager</string>
@@ -68,13 +69,13 @@
 
     <!--App Detail Key-->
     <string name="app_info_title">App Detail</string>
-    <string name="app_detail_title">app_title</string>
-    <string name="app_detail_package">app_package</string>
-    <string name="app_detail_apk_size">app_apk_size</string>
-    <string name="app_detail_data_size">app_data_size</string>
-    <string name="app_detail_permissions">app_permission</string>
-    <string name="app_detail_date_installed">app_installed_date</string>
-    <string name="app_detail_date_modify">app_modify_date</string>
+    <string name="app_detail_title" translatable="false">app_title</string>
+    <string name="app_detail_package" translatable="false">app_package</string>
+    <string name="app_detail_apk_size" translatable="false">app_apk_size</string>
+    <string name="app_detail_data_size" translatable="false">app_data_size</string>
+    <string name="app_detail_permissions" translatable="false">app_permission</string>
+    <string name="app_detail_date_installed" translatable="false">app_installed_date</string>
+    <string name="app_detail_date_modify" translatable="false">app_modify_date</string>
 
     <!--App Detail Title-->
     <string name="app_package">Package name</string>
@@ -93,6 +94,9 @@
     <string name="setting_apk_path">Path to save Apk</string>
     <string name="save_path_success">Change Apk path successfully!</string>
     <string name="save_path_fail">Change Apk path failed</string>
+    <string name="setting_about_key" translatable="false">about</string>
+    <string name="setting_about_summary">Version 1.0</string>
+    <string name="setting_about_title">About</string>
 
     <!--Folder Chooser-->
     <string name="folder_select_title">Select Folder</string>
@@ -100,5 +104,12 @@
     <string name="folder_selected">Select this folder</string>
     <string name="folder_not_select_warning">You must choose a folder first!</string>
 
+    <!--About-->
+    <string name="about_title" translatable="false">Package Inspector ver 1.0</string>
+    <string name="about_author_title">Author: </string>
+    <string name="about_author">Pham Van Manh</string>
+    <string name="about_email_title">Email: </string>
+    <string name="about_email" translatable="false">manhterry93@gmail.com</string>
+    <string name="about_rate">If you like this app, rate it!</string>
 </resources>
 

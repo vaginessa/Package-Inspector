@@ -3,6 +3,7 @@ package pl.itto.packageinspector.appdetail.view;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import pl.itto.packageinspector.R;
 import pl.itto.packageinspector.appdetail.IAppDetailContract;
 import pl.itto.packageinspector.appdetail.presenter.AppDetailPresenter;
 import pl.itto.packageinspector.base.BaseFragmentActivity;
+import pl.itto.packageinspector.base.IActionCallback;
 import pl.itto.packageinspector.utils.AppConstants;
 
 import static pl.itto.packageinspector.utils.AppConstants.AppDetail.EXTRA_KEY;
@@ -90,8 +92,26 @@ public class AppDetailActivity extends BaseFragmentActivity implements IAppDetai
                     uninstallApp(mPackageName);
                 break;
             case R.id.action_extract_apk:
-                if (mPath != null && mAppName != null)
-                    mPresenter.extractApk(mPath, mAppName);
+                if (mPath != null && mAppName != null) {
+                    if (isGrantPermisisons())
+                        mPresenter.extractApk(mPath, mAppName);
+                    else {
+                        requestPermissions(new IActionCallback() {
+                            @Override
+                            public void onSuccess(Object result) {
+                                mPresenter.extractApk(mPath, mAppName);
+                            }
+
+                            @Override
+                            public void onFailed(@Nullable Object error) {
+                                showMessage(R.string.permission_grant_failed);
+                            }
+                        });
+                        break;
+
+                    }
+
+                }
                 break;
             case R.id.action_open_intent:
                 if (mPackageName != null)
@@ -120,6 +140,7 @@ public class AppDetailActivity extends BaseFragmentActivity implements IAppDetai
     public void openDetailIntent(String packageName) {
         Intent i = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         i.addCategory(Intent.CATEGORY_DEFAULT);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.setData(Uri.parse("package:" + packageName));
         startActivity(i);
     }
