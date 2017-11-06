@@ -23,6 +23,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import pl.itto.packageinspector.about.AboutActivity;
 import pl.itto.packageinspector.base.BaseFragment;
 import pl.itto.packageinspector.deviceinfo.view.DeviceInfoFragment;
@@ -46,6 +50,8 @@ public class MainFragment extends BaseFragment implements IMainContract.IMainVie
     public static final int FLAG_SETTING = 5;
     public static final int FLAG_UNKNOWN = -1;
 
+    private AdView mBannerAds;
+    private AdRequest mAdRequest;
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
     private IMainContract.IMainPresenter mPresenter;
@@ -71,6 +77,7 @@ public class MainFragment extends BaseFragment implements IMainContract.IMainVie
         super.onCreate(savedInstanceState);
 //        setRetainInstance(true);
         setHasOptionsMenu(true);
+        mAdRequest = new AdRequest.Builder().build();
     }
 
     @Nullable
@@ -91,6 +98,22 @@ public class MainFragment extends BaseFragment implements IMainContract.IMainVie
 //        mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
         mNavigationView = (NavigationView) view.findViewById(R.id.nav_view);
         setupDrawerContent(mNavigationView);
+
+//        AdView
+        mBannerAds = (AdView) view.findViewById(R.id.ad_view);
+        mBannerAds.setAdListener(new AdListener() {
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                Log.e(TAG, "onAdFailedToLoad: " + i);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                Log.i(TAG, "onAdLoaded: ");
+            }
+        });
         return view;
     }
 
@@ -149,6 +172,8 @@ public class MainFragment extends BaseFragment implements IMainContract.IMainVie
         } else {
             navigateView(mCurrentSelectPos);
         }
+
+        mBannerAds.loadAd(mAdRequest);
     }
 
     @Override

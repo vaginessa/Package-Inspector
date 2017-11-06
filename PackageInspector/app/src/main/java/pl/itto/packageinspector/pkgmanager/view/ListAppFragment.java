@@ -18,11 +18,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.formats.NativeAppInstallAd;
+import com.google.android.gms.ads.formats.NativeAppInstallAdView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import pl.itto.packageinspector.MainActivity;
 import pl.itto.packageinspector.R;
 import pl.itto.packageinspector.appdetail.view.AppDetailActivity;
@@ -55,6 +64,10 @@ public class ListAppFragment extends BaseFragment implements IPackageManagerCont
     //For uninstall app
     private String mRemovedApp = null;
     private int mRemovedAppAdapterPos = -1;
+    public static String ADMOB_AD_UNIT_ID = "ca-app-pub-3940256099942544/2247696110";
+
+    NativeAppInstallAd mNativeAd = null;
+    AdLoader.Builder builder;
 
     public static ListAppFragment newInstance(IDataSource dataSource, int pos) {
         ListAppFragment fragment = new ListAppFragment();
@@ -108,6 +121,7 @@ public class ListAppFragment extends BaseFragment implements IPackageManagerCont
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         filterData();
+//        builder = new AdLoader.Builder(getContext(), ADMOB_AD_UNIT_ID);
         Log.i(TAG, "appSize: " + mAppsList.size());
     }
 
@@ -191,9 +205,10 @@ public class ListAppFragment extends BaseFragment implements IPackageManagerCont
         mPresenter.launchApp(pkgName);
     }
 
-    class ListAppAdapter extends RecyclerView.Adapter<ListAppAdapter.ViewHolder> {
+    class ListAppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-
+        static final int TYPE_AD = 0;
+        static final int TYPE_APP = 1;
         private Context mContext;
         private List<AppItem> mItemList = new ArrayList<>();
 
@@ -207,15 +222,31 @@ public class ListAppFragment extends BaseFragment implements IPackageManagerCont
             notifyDataSetChanged();
         }
 
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.list_app_item, parent, false);
-            return new ViewHolder(view);
-        }
+//        @Override
+//        public int getItemViewType(int position) {
+//            return position == 0 ? TYPE_AD : TYPE_APP;
+//        }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.bindApps(mItemList.get(position));
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view;
+//            if (viewType == TYPE_AD) {
+//                view = LayoutInflater.from(mContext).inflate(R.layout.ad_install, parent, false);
+//                return new AdHolder(view);
+//            }
+            view = LayoutInflater.from(mContext).inflate(R.layout.list_app_item, parent, false);
+            return new ViewHolder(view);
+
+        }
+
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if (holder instanceof ViewHolder)
+                ((ViewHolder) holder).bindApps(mItemList.get(position));
+//            else if (holder instanceof AdHolder) {
+//                ((AdHolder) holder).bindItem();
+//            }
         }
 
         public void removeApp(int pos) {
@@ -233,8 +264,6 @@ public class ListAppFragment extends BaseFragment implements IPackageManagerCont
                     return;
                 }
             }
-
-
         }
 
         @Override
@@ -346,6 +375,70 @@ public class ListAppFragment extends BaseFragment implements IPackageManagerCont
                 getActivity().getMenuInflater().inflate(R.menu.option_list_item, menu);
             }
         }
+
+        class AdHolder extends RecyclerView.ViewHolder {
+            @BindView(R.id.ad_app_icon)
+            ImageView mIcon;
+            @BindView(R.id.ad_headline)
+            TextView mHeadLines;
+            @BindView(R.id.ad_body)
+            TextView mBody;
+            @BindView(R.id.ad_price)
+            TextView mPrice;
+            @BindView(R.id.ad_store)
+            TextView mStore;
+            @BindView(R.id.ad_rating)
+            RatingBar mRating;
+            @BindView(R.id.ad_root)
+            NativeAppInstallAdView mAdRoot;
+
+            public AdHolder(View itemView) {
+                super(itemView);
+                ButterKnife.bind(this, itemView);
+                mAdRoot.setHeadlineView(mHeadLines);
+                mAdRoot.setBodyView(mBody);
+                mAdRoot.setIconView(mIcon);
+                mAdRoot.setPriceView(mPrice);
+                mAdRoot.setStarRatingView(mRating);
+
+            }
+
+            void bindItem() {
+                Log.i(TAG, "bindItem: ");
+                if (mNativeAd == null) {
+                    Log.w(TAG, "bindItem: Loading ads");
+                    builder.forAppInstallAd(new NativeAppInstallAd.OnAppInstallAdLoadedListener() {
+                        @Override
+                        public void onAppInstallAdLoaded(NativeAppInstallAd nativeAppInstallAd) {
+                            Log.i(TAG, "onAppInstallAdLoaded: ");
+                            if (nativeAppInstallAd != null)
+                                mNativeAd = nativeAppInstallAd;
+                            bindItem();
+                        }
+                    });
+
+                    AdLoader loader = builder.withAdListener(new AdListener() {
+                        @Override
+                        public void onAdFailedToLoad(int i) {
+                            super.onAdFailedToLoad(i);
+                            Log.e(TAG, "onAdFailedToLoad: " + i);
+                        }
+                    }).build();
+                    loader.loadAd(new AdRequest.Builder().build());
+                } else {
+                    mIcon.setImageDrawable(mNativeAd.getIcon().getDrawable());
+                    mHeadLines.setText(mNativeAd.getHeadline());
+                    mRating.setRating(mNativeAd.getStarRating().floatValue());
+                    mBody.setText(mNativeAd.getBody());
+                    mStore.setText(mNativeAd.getStore());
+                    mAdRoot.setNativeAd(mNativeAd);
+                }
+            }
+        }
+    }
+
+    private void populateInstalldView() {
+
     }
 
     private void filterData() {
@@ -358,7 +451,6 @@ public class ListAppFragment extends BaseFragment implements IPackageManagerCont
         }
         if (mListAppAdapter != null) {
             mListAppAdapter.replaceData(mAppsList);
-
         }
     }
 

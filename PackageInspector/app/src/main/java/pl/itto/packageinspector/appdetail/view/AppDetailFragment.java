@@ -3,18 +3,19 @@ package pl.itto.packageinspector.appdetail.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceFragmentCompat;
-import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import pl.itto.packageinspector.R;
-import pl.itto.packageinspector.appdetail.presenter.AppDetailFragmentPresenter;
 import pl.itto.packageinspector.appdetail.IAppDetailContract;
 import pl.itto.packageinspector.appdetail.IAppDetailContract.IAppDetailFragmentPresenter;
 import pl.itto.packageinspector.appdetail.model.AppInfo;
-import pl.itto.packageinspector.base.BasePreferenceFragent;
+import pl.itto.packageinspector.appdetail.presenter.AppDetailFragmentPresenter;
+import pl.itto.packageinspector.base.BasePreferenceFragment;
 import pl.itto.packageinspector.utils.Utils;
+import pl.itto.packageinspector.widget.CustomPreference;
 
 import static pl.itto.packageinspector.utils.AppConstants.AppDetail.EXTRA_KEY;
 
@@ -22,9 +23,10 @@ import static pl.itto.packageinspector.utils.AppConstants.AppDetail.EXTRA_KEY;
  * Created by PL_itto on 10/20/2017.
  */
 
-public class AppDetailFragment extends BasePreferenceFragent implements IAppDetailContract.IAppDetailFragmentView, Preference.OnPreferenceClickListener {
+public class AppDetailFragment extends BasePreferenceFragment implements IAppDetailContract.IAppDetailFragmentView, Preference.OnPreferenceClickListener {
     private static final String TAG = "PL_itto.AppDetailFragment1";
-    private Preference mName, mPackage, mApkSize, mDataSize, mPermission, mInstallDate, mModifyDate;
+    private Preference mName, mPackage, mApkSize, mDataSize, mInstallDate, mModifyDate;
+    private CustomPreference mPermission;
     private String mPackageName = null;
     private IAppDetailFragmentPresenter mPresenter;
 
@@ -48,7 +50,7 @@ public class AppDetailFragment extends BasePreferenceFragent implements IAppDeta
     }
 
     private void initPreferences() {
-        PreferenceManager preferenceManager = getPreferenceManager();
+        android.support.v7.preference.PreferenceManager preferenceManager = getPreferenceManager();
         mName = preferenceManager.findPreference(getString(R.string.app_detail_title));
         mName.setOnPreferenceClickListener(this);
         mPackage = preferenceManager.findPreference(getString(R.string.app_detail_package));
@@ -57,7 +59,7 @@ public class AppDetailFragment extends BasePreferenceFragent implements IAppDeta
         mApkSize.setOnPreferenceClickListener(this);
         mDataSize = preferenceManager.findPreference(getString(R.string.app_detail_data_size));
         mDataSize.setOnPreferenceClickListener(this);
-        mPermission = preferenceManager.findPreference(getString(R.string.app_detail_permissions));
+        mPermission = (CustomPreference) preferenceManager.findPreference(getString(R.string.app_detail_permissions));
         mPermission.setOnPreferenceClickListener(this);
         mInstallDate = preferenceManager.findPreference(getString(R.string.app_detail_date_installed));
         mInstallDate.setOnPreferenceClickListener(this);
@@ -65,10 +67,6 @@ public class AppDetailFragment extends BasePreferenceFragent implements IAppDeta
         mModifyDate.setOnPreferenceClickListener(this);
     }
 
-    @Override
-    public void onCreatePreferences(Bundle bundle, String s) {
-        Log.i(TAG, "onCreatePreferences: ");
-    }
 
     @Override
     public void setPresenter(IAppDetailFragmentPresenter presenter) {
@@ -100,7 +98,8 @@ public class AppDetailFragment extends BasePreferenceFragent implements IAppDeta
         mApkSize.setSummary(Utils.formatSize(info.getAppSize(), Utils.TYPE_BYTE));
         mInstallDate.setSummary(info.getInstalledDateString());
         mModifyDate.setSummary(info.getModifiedDateString());
-        mPermission.setSummary(info.getPermissions(getContext()));
+        Log.i(TAG, "Permission: " + info.getPermissions(getActivity().getBaseContext()));
+        mPermission.setSummary(info.getPermissions(getActivity().getBaseContext()));
         if (info.getApkPath() != null && info.getAppName() != null) {
             getParent().setAppInfo(info.getApkPath(), info.getAppName());
         }

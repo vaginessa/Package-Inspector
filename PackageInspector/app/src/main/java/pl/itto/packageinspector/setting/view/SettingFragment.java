@@ -2,20 +2,16 @@ package pl.itto.packageinspector.setting.view;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceFragmentCompat;
-import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 
 import pl.itto.packageinspector.R;
 import pl.itto.packageinspector.about.AboutActivity;
 import pl.itto.packageinspector.base.BaseFragmentActivity;
-import pl.itto.packageinspector.base.BasePreferenceFragent;
+import pl.itto.packageinspector.base.BasePreferenceFragment;
 import pl.itto.packageinspector.base.IActionCallback;
 import pl.itto.packageinspector.data.DataManager;
 import pl.itto.packageinspector.data.IDataSource;
@@ -30,29 +26,24 @@ import pl.itto.packageinspector.utils.AppConstants;
  * Created by PL_itto on 10/26/2017.
  */
 
-public class SettingFragment extends BasePreferenceFragent implements ISettingContract.ISettingView, Preference.OnPreferenceClickListener {
+public class SettingFragment extends BasePreferenceFragment implements ISettingContract.ISettingView, Preference.OnPreferenceClickListener {
     private static final String TAG = "PL_itto.SettingFragment";
     Preference mApkPreference, mAboutPreference;
     ISettingPresenter mPresenter;
     IDataSource mDataSource;
 
     @Override
-    public void onCreatePreferences(Bundle bundle, String s) {
-        Log.i(TAG, "onCreatePreferences: " + s);
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setRetainInstance(true);
-        mDataSource = DataManager.getInstance(getContext());
+        mDataSource = DataManager.getInstance(getActivity().getBaseContext());
         addPreferencesFromResource(R.xml.setting_preference);
         setPresenter(new SettingPresenter(this, mDataSource));
         initPreferences();
     }
 
     private void initPreferences() {
-        PreferenceManager preferenceManager = getPreferenceManager();
+        android.support.v7.preference.PreferenceManager preferenceManager = getPreferenceManager();
         mApkPreference = preferenceManager.findPreference(getString(R.string.setting_apk_path_key));
         mApkPreference.setOnPreferenceClickListener(this);
         mApkPreference.setSummary(mDataSource.getSaveApkPath());
@@ -110,7 +101,7 @@ public class SettingFragment extends BasePreferenceFragent implements ISettingCo
 
     @Override
     public void openDirectorySelector() {
-        Intent intent = new Intent(getContext(), FileChooserActivity.class);
+        Intent intent = new Intent(getActivity().getBaseContext(), FileChooserActivity.class);
         startActivityForResult(intent, AppConstants.Settings.REQUEST_APK_PATH);
     }
 
@@ -122,7 +113,7 @@ public class SettingFragment extends BasePreferenceFragent implements ISettingCo
 
     @Override
     public void openAbout() {
-        Intent i = new Intent(getContext(), AboutActivity.class);
+        Intent i = new Intent(getActivity().getBaseContext(), AboutActivity.class);
         startActivity(i);
     }
 

@@ -163,6 +163,7 @@ public class DeviceInfoFragment extends Fragment implements IDeviceInfoView {
         DisplayInfo displayInfo = mDataSource.getDisplayInfo();
         mTxtScrenSize.setText(getString(R.string.info_result_content, displayInfo.getResolution()));
         mTxtDensity.setText(getString(R.string.info_result_content, String.valueOf(displayInfo.getDensity())));
+        mTxtResources.setText(getString(R.string.info_result_content, displayInfo.getRes()));
     }
 
     private void updateBuildInfo() {

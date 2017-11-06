@@ -20,6 +20,7 @@ import pl.itto.packageinspector.deviceinfo.data.model.DisplayInfo;
 import pl.itto.packageinspector.deviceinfo.data.model.PackageInfo;
 import pl.itto.packageinspector.deviceinfo.data.model.ProductInfo;
 import pl.itto.packageinspector.deviceinfo.data.model.StorageInfo;
+import pl.itto.packageinspector.utils.DisplayUtils;
 
 /**
  * Created by PL_itto on 6/15/2017.
@@ -88,7 +89,8 @@ public class DeviceManager implements IDeviceInfoDataSource {
         float density = displayMetrics.density;
         int densityDpi = displayMetrics.densityDpi;
         String resolution = displayMetrics.widthPixels + " x " + displayMetrics.heightPixels;
-
+        String resources = "sw" + displayMetrics.densityDpi + "dp" + "-" + DisplayUtils.getRangeScreen(displayMetrics.densityDpi);
+        mDisplayInfo.setRes(resources);
         mDisplayInfo.setResolution(resolution);
         mDisplayInfo.setDensity(String.valueOf(densityDpi));
         mDisplayInfo.setQuality(density);
@@ -130,9 +132,9 @@ public class DeviceManager implements IDeviceInfoDataSource {
 
         // Storage Info
         StatFs statFs = new StatFs(Environment.getExternalStorageDirectory().getPath());
-        long totalStorage = statFs.getBlockSizeLong()*statFs.getBlockCountLong();
+        long totalStorage = statFs.getBlockSizeLong() * statFs.getBlockCountLong();
         mStorageInfo.setTotalStorage(totalStorage);
-        Log.i(TAG,"storage: "+totalStorage);
+        Log.i(TAG, "storage: " + totalStorage);
     }
 
     @Override

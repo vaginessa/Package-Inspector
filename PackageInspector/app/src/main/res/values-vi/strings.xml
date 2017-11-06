@@ -1,0 +1,103 @@
+<resources>
+    <string name="app_name">"Package Inspector"</string>
+    <string name="permission_grant_failed">Cần quyền truy cập để hoạt động bình thường</string>
+    <!--For NavigationView-->
+    <string name="action_device_info">Device Info</string>
+    <string name="action_package_manager">Package Manager</string>
+    <string name="action_setting">Cài đặt</string>
+    <string name="action_detail">Thông tin</string>
+    <string name="action_rate">Đánh giá</string>
+    <string name="action_more_apps">More Apps</string>
+    <string name="group_communicate">Communicate</string>
+    <string name="action_header_title">Package Inspector ver 1.0</string>
+
+
+    <!--Device Info-->
+    <string name="title_pkg_info">Package Info:</string>
+    <string name="title_product_info">Product Info:</string>
+    <string name="title_display_info">Display Info:</string>
+    <string name="title_build_info">Build Info:</string>
+    <string name="title_android_info">Android Info:</string>
+    <string name="title_memory_info">Memory Info:</string>
+
+    <string name="info_total_apk">Số lượng ứng dụng</string>
+    <string name="info_system_apk">Ứng dụng hệ thống</string>
+    <string name="info_other_apk">Ứng dụng khác</string>
+
+    <string name="info_manufacturer">Nhà sản xuất</string>
+    <string name="info_product_name">Product Name</string>
+    <string name="info_model_name">Tên model</string>
+    <string name="info_platform">Platform </string>
+
+    <string name="info_screen_size">Độ phân giải</string>
+    <string name="info_density">Density </string>
+    <string name="info_quality">Quality </string>
+    <string name="info_res">Resources </string>
+
+    <string name="info_build_type">Build Type </string>
+    <string name="info_build_date">Build Date </string>
+    <string name="info_build_version">Build Version </string>
+
+    <string name="info_android_ver">Phiên bản Android</string>
+    <string name="info_android_sdk">Android SDK </string>
+
+    <string name="info_ram">Kích thước Ram</string>
+    <string name="info_storage">Bộ nhớ</string>
+
+    <string name="info_result_content">: %s</string>
+
+    <!--Package Manager-->
+    <string name="pkg_system_apps">System Apps</string>
+    <string name="pkg_other_apps">Other Apps</string>
+    <string name="pkg_loading_apps">Đang quét ứng dụng</string>
+    <string name="pkg_option_extract_apk">Xuất Apk</string>
+    <string name="pkg_option_launch">Khởi chạy ứng dụng</string>
+    <string name="pkg_option_open_intent">Thêm thông tin</string>
+    <string name="pkg_option_remove">Gỡ cài đặt App</string>
+    <string name="pkg_action_search">Tìm kiếm</string>
+    <string name="pkg_extract_failed">Xuất file thất bại!</string>
+    <string name="pkg_extract_success">Xuất file thành công!</string>
+    <string name="pkg_extract_success1">Apk được xuất ra thư mục %s</string>
+    <string name="pkg_uninstall_failed">Gỡ cài đặt thất bại!</string>
+
+    <!--&lt;!&ndash;App Detail&ndash;&gt;-->
+    <!--<string name="app_detail_title">App Detail</string>-->
+    <!--<string name="app_uninstall">Uninstall</string>-->
+    <!--<string name="app_force_stop">Force Stop</string>-->
+    <!--<string name="app_launch">Launch</string>-->
+
+
+    <!--App Detail Key-->
+    <string name="app_info_title">Thông tin ứng dụng</string>
+
+    <!--App Detail Title-->
+    <string name="app_package">Tên Package</string>
+    <string name="app_apk_size">Kích thước Apk</string>
+    <string name="app_data_size">Kích thước Data</string>
+    <string name="app_permission">Quyền truy cập</string>
+    <string name="app_install_date">Ngày cài đặt</string>
+    <string name="app_modify_date">Ngày chỉnh sửa cuối cùng</string>
+    <string name="app_data_calculating">Đang tính toán...</string>
+    <string name="app_no_permission_required">Không yêu cầu quyền truy cập nào</string>
+    <string name="app_version_name">Phiên bản: %s</string>
+
+    <!--Setting-->
+    <string name="setting_title">Cài đặt</string>
+    <string name="setting_apk_path">Đường dẫn lưu Apk</string>
+    <string name="save_path_success">Đổi đường dẫn lưu Apk thành công!</string>
+    <string name="save_path_fail">Đổi đường dẫn lưu Apk thất bại!</string>
+    <string name="setting_about_summary">Phiên bản 1.0</string>
+    <string name="setting_about_title">Thông tin</string>
+
+    <!--Folder Chooser-->
+    <string name="folder_select_title">Chọn thư mục</string>
+    <string name="folder_select_none">Chọn một thư mục</string>
+    <string name="folder_selected">Chọn thư mục này</string>
+    <string name="folder_not_select_warning">Bạn phải chọn một thư mục trước!</string>
+
+    <!--About-->
+    <string name="about_author_title">"Tác giả: "</string>
+    <string name="about_author">Phạm Văn Mạnh</string>
+    <string name="about_rate">Nếu bạn thích ứng dụng này, hãy để lại đánh giá !</string>
+</resources>
+

@@ -22,16 +22,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/action_bar_size"
                 android:background="@color/colorPrimaryDark"
+                android:elevation="15dp"
                 android:minHeight="@dimen/action_bar_size"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                android:elevation="15dp"
                 app:theme="@style/AppTheme.Toolbar"/>
         </android.support.design.widget.AppBarLayout>
 
-        <FrameLayout
-            android:id="@+id/content_frame"
+        <!--Main Layout-->
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+
+            <!--Ads Layout-->
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/ad_view"
+                android:layout_width="match_parent"
+                app:adSize="SMART_BANNER"
+                app:adUnitId="@string/ad_banner_unit_id"
+                android:layout_height="@dimen/ad_banner_height"
+                android:layout_alignParentBottom="true"/>
+
+            <FrameLayout
+                android:id="@+id/content_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/ad_view"/>
+        </RelativeLayout>
+
     </LinearLayout>
 
     <android.support.design.widget.NavigationView
@@ -39,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
         android:background="#FFFFFF"
+        app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_action"/>
 </android.support.v4.widget.DrawerLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">"Package Inspector "</string>
+    <string name="app_name">"Package Inspector"</string>
     <string name="permission_grant_failed">This feature need this Permissions to work properly</string>
     <!--For NavigationView-->
     <string name="action_device_info">Device Info</string>
@@ -108,8 +108,13 @@
     <string name="about_title" translatable="false">Package Inspector ver 1.0</string>
     <string name="about_author_title">Author: </string>
     <string name="about_author">Pham Van Manh</string>
-    <string name="about_email_title">Email: </string>
+    <string name="about_email_title" translatable="false">Email: </string>
     <string name="about_email" translatable="false">manhterry93@gmail.com</string>
     <string name="about_rate">If you like this app, rate it!</string>
+
+    <!--Ads-->
+    <string name="ad_banner_app_id" translatable="false">ca-app-pub-6288726369328806~2713388175</string>
+    <string name="ad_banner_unit_id" translatable="false">ca-app-pub-6288726369328806/3603713729</string>
+    <string name="ad_banner_unit_id_test" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
 </resources>
 
